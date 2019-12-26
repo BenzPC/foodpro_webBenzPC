@@ -122,7 +122,7 @@
                 </a>
               </li>
               <li class="nav-item <?php if ($chgpwd) echo 'active' ?>">
-                <a class="nav-link sub-menu" href="software.php">
+                <a class="nav-link sub-menu" href="addsubcate.php">
                   <small>
                     <i class="fas fa-clipboard-check px-2"></i>
                     Add Sub Category
@@ -152,7 +152,7 @@
                 </a>
               </li>
               <li class="nav-item <?php if ($chgpwd) echo 'active' ?>">
-                <a class="nav-link sub-menu" href="software.php">
+                <a class="nav-link sub-menu" href="addtypecate.php">
                   <small>
                     <i class="fas fa-clipboard-check px-2"></i>
                     Add Type Category
@@ -183,7 +183,7 @@
                 </a>
               </li>
               <li class="nav-item <?php if ($chgpwd) echo 'active' ?>">
-                <a class="nav-link sub-menu" href="software.php">
+                <a class="nav-link sub-menu" href="addunit.php">
                   <small>
                     <i class="fas fa-clipboard-check px-2"></i>
                     Add Unit

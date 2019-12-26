@@ -109,7 +109,6 @@ if (empty($_SESSION['name'])) {
 
 <body>
   <?php include_once 'inc/navbar.php' ?>
-
   <div class="container-fluid">
     <div class="row">
       <?php include_once 'inc/sidemenu.php' ?>
@@ -949,8 +948,7 @@ if (empty($_SESSION['name'])) {
         var emailFilter = /^.+@.+\..{2,3}$/; // ตรวจอีเมล
         var emailerr = ""; // อีเมลผิด
         // console.log(id);
-
-        var url = url_global + '/api/v1_0/shop/'
+        
         // var url = url_global + '/api/v1_0/product'
         // event.preventDefault();
         var form1 = $('#fileEditForm')[0];
@@ -1075,17 +1073,18 @@ if (empty($_SESSION['name'])) {
             if (emailerr == "err") {
               alert('อีเมล์ไม่ถูกต้อง');
             } else {
-              alert(SaveConfirmShop);
-              if (SaveConfirmShop == "Save") {
-
-                if (imgProfile.length > 0 && imgBanner.length > 0) {
-                  SaveShop();
-                } else {
-                  alert('ใส่รูป');
-                }
-
+              if (tel.length < 9) {
+                alert('เบอร์โทรควรไม่ต่ำกว่า 9 ตัว');
               } else {
-                ConfirmShop();
+                if (SaveConfirmShop == "Save") {
+                  if (imgProfile.length > 0 && imgBanner.length > 0) {
+                    SaveShop();
+                  } else {
+                    alert('ใส่รูป');
+                  }
+                } else {
+                  ConfirmShop();
+                }
               }
             }
           } else {
@@ -1095,8 +1094,8 @@ if (empty($_SESSION['name'])) {
       };
 
       function SaveShop() {
+        var url = url_global + '/api/v1_0/shop/admingenshop/'
         alert("บันทึก");
-
         // $.ajax({
         //   type: "POST",
         //   enctype: 'multipart/form-data',
@@ -1125,6 +1124,8 @@ if (empty($_SESSION['name'])) {
       };
 
       function ConfirmShop() {
+
+        var url = url_global + '/api/v1_0/shop/'
         alert("ยืนยัน");
         // $.ajax({
         //   type: "POST",
