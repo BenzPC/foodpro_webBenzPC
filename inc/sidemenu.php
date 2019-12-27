@@ -58,7 +58,7 @@
           </ul>
         </div>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" >
         <a class="nav-link" data-toggle="collapse" id="Asub_dashboard2" href="#">
           <i class="fas fa-file-alt px-2" id="ISsub_dashboard2"></i>
           CATEGORY
@@ -94,7 +94,7 @@
         <div id="sub_dashboard3" class="collapse <?php if ($profile || $chgpwd) echo ''; ?>">
           <ul class="nav flex-column">
             <li class="nav-item <?php if ($profile) echo 'active' ?>">
-              <a class="nav-link sub-menu" href="Manageparts.php">
+              <a class="nav-link sub-menu" href="listsubcate.php">
                 <small>
                   <i class="fas fa-list px-2"></i>
                   List Sub Category
@@ -121,7 +121,7 @@
         <div id="sub_dashboard4" class="collapse <?php if ($profile || $chgpwd) echo ''; ?>">
           <ul class="nav flex-column">
             <li class="nav-item <?php if ($profile) echo 'active' ?>">
-              <a class="nav-link sub-menu" href="Manageparts.php">
+              <a class="nav-link sub-menu" href="listtypecate.php">
                 <small>
                   <i class="fas fa-list px-2"></i>
                   List Type Category
@@ -148,7 +148,7 @@
         <div id="sub_dashboard5" class="collapse <?php if ($profile || $chgpwd) echo ''; ?>">
           <ul class="nav flex-column">
             <li class="nav-item <?php if ($profile) echo 'active' ?>">
-              <a class="nav-link sub-menu" href="Manageparts.php">
+              <a class="nav-link sub-menu" href="listunit.php">
                 <small>
                   <i class="fas fa-list px-2"></i>
                   List Unit
@@ -181,9 +181,9 @@
       classshow(element , element2 );
     });
     $("#Asub_dashboard2").click(function() {
-      var element = document.getElementById("sub_dashboard2");
-      var element2 = document.getElementById("Isub_dashboard2");
-      classshow(element , element2 );
+      // var element = document.getElementById("sub_dashboard2");
+      // var element2 = document.getElementById("Isub_dashboard2");
+      // classshow(element , element2 );
     });
     $("#Asub_dashboard3").click(function() {
       var element = document.getElementById("sub_dashboard3");
@@ -212,8 +212,6 @@
         element.classList.add("show");
         element2.classList.remove("fa-angle-down");
         element2.classList.add("fa-angle-up");
-
-
       }
     }
 
