@@ -3,6 +3,8 @@ session_start();
 if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
     header('Location: ../logout.php');
 }
+$configs = include('../config/constants.php');
+$url_global = $configs['url_global'];
 ?>
 
 <!doctype html>
@@ -14,23 +16,17 @@ if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Admin FoodPro</title>
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-pro/css/all.min.css">
-  <link rel="stylesheet" href="node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="node_modules/select2/dist/css/select2.min.css">
-  <link rel="stylesheet" href="public/css/custom.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-
+    <?php include_once '../inc/meta.php' ?>
 
 
 </head>
 
 <body>
 
-    <!-- <?php include_once 'inc/navbar.php' ?> -->
+    <?php include_once '../inc/navbar.php' ?>
     <div class="container-fluid">
         <div class="row">
-            <!-- <?php include_once 'inc/sidemenu.php' ?> -->
+            <?php include_once '../inc/sidemenu.php' ?>
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <div class="row justify-content-center">
                     <div class="col-12">
@@ -88,24 +84,15 @@ if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
             </main>
         </div>
     </div>
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
-  <script src="node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
-  <script src="node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-  <script src="node_modules/select2/dist/js/select2.min.js"></script>
-  <script src="public/js/main.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script type="text/javascript" charset="utf8" src="js/jquery.dataTables.js"></script>
+
     <script>
         $(document).ready(function() {
-            const url_global = 'http://127.0.0.1:4200';
+            // const url_global = 'http://203.150.52.242:4200';
             // const url_global = 'http://192.168.1.175:4200';
             // const url_global = 'https://apidev.foodproonline.com';
             // const url_global = 'http://203.150.52.247:4200';
+            const url_global = '<?= $url_global ?>';
+
             $("#ISsub_dashboard3").attr('style', "color : brown");
 
             load_cate()

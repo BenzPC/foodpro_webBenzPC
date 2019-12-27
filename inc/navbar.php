@@ -17,14 +17,14 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
           <a class="nav-link" href="javascript:void(0)" data-toggle="dropdown">
-          <?php echo $_SESSION['name']; ?>
+            <?php echo $_SESSION['name']; ?>
             <i class="fa fa-angle-down px-2"></i>
           </a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="profile.php">
               <small>
                 <i class="fas fa-user px-2"></i>
-				ข้อมูลส่วนตัว
+                ข้อมูลส่วนตัว
               </small>
             </a>
             <!-- <a class="dropdown-item" href="change_pwd.php">
@@ -36,7 +36,7 @@
             <a class="dropdown-item" href="logout.php" onClick="return confirm('Are you sure?');">
               <small>
                 <i class="fas fa-sign-out px-2"></i>
-				ออกจากระบบ
+                ออกจากระบบ
               </small>
             </a>
           </div>

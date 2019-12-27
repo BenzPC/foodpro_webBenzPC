@@ -3,6 +3,9 @@ session_start();
 if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
     header('Location: ../logout.php');
 }
+
+$configs = include('../config/constants.php');
+$url_global = $configs['url_global'];
 ?>
 
 <!doctype html>
@@ -14,12 +17,7 @@ if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Admin FoodPro</title>
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-pro/css/all.min.css">
-  <link rel="stylesheet" href="node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="node_modules/select2/dist/css/select2.min.css">
-  <link rel="stylesheet" href="public/css/custom.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <?php include_once '../inc/meta.php' ?>
 
 
 
@@ -27,16 +25,16 @@ if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
 
 <body>
 
-    <!-- <?php include_once 'inc/navbar.php' ?> -->
+    <?php include_once '../inc/navbar.php' ?>
     <div class="container-fluid">
         <div class="row">
-            <!-- <?php include_once 'inc/sidemenu.php' ?> -->
+            <?php include_once '../inc/sidemenu.php' ?>
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <div class="row justify-content-center">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="text-center">เพิ่ม SubCategory</h5>
+                                <h5 class="text-center">เพิ่ม TypeCategory</h5>
                             </div>
                         </div>
                     </div>
@@ -62,16 +60,16 @@ if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
                                                     <div class="row">
                                                         <div class="col-xl">
                                                             <div class="position-relative form-group">
-                                                                <label for="" class="">SubCategory ชื่อไทย</label>
-                                                                <input name="subcateth" id="subcateth" placeholder="" type="text" class="form-control">
+                                                                <label for="" class="">Sub Category</label>
+                                                                <input name="subcategory" id="subcategory" placeholder="" type="text" class="form-control">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-xl">
                                                             <div class="position-relative form-group">
-                                                                <label for="" class="">SubCategory ชื่ออังกฤษ</label>
-                                                                <input name="subcateen" id="subcateen" placeholder="" type="text" class="form-control">
+                                                                <label for="" class="">TypeCategory ชื่อไทย</label>
+                                                                <input name="typecate" id="typecate" placeholder="" type="text" class="form-control">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -88,30 +86,22 @@ if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
             </main>
         </div>
     </div>
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
-  <script src="node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
-  <script src="node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-  <script src="node_modules/select2/dist/js/select2.min.js"></script>
-  <script src="public/js/main.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script type="text/javascript" charset="utf8" src="js/jquery.dataTables.js"></script>
+
+
     <script>
         $(document).ready(function() {
-            const url_global = 'http://127.0.0.1:4200';
+            // const url_global = 'http://203.150.52.242:4200';
             // const url_global = 'http://192.168.1.175:4200';
             // const url_global = 'https://apidev.foodproonline.com';
             // const url_global = 'http://203.150.52.247:4200';
-            $("#ISsub_dashboard3").attr('style', "color : brown");
+            const url_global = '<?= $url_global ?>';
 
+            $("#ISsub_dashboard4").attr('style', "color : brown");
             load_cate()
 
             function load_cate() {
                 $('#category').empty()
+                $('#subcategory').empty()
                 $.get(url_global + '/api/v1_0/master/getcombocate').done(function(data) {
                     var append = ""
                     if (data['STATUS'] == 1) {
@@ -125,7 +115,40 @@ if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
                             }
 
                             $('#category').append(append)
+                            load_sub($('#category').val())
                             //alert(append)
+
+                        } else {
+                            alert("dataRes.length != 0 |||||| ไม่พบข้อมูล");
+                        }
+                    } else {
+                        alert("Status ไม่เท่ากับ 1")
+                    }
+                })
+            }
+
+            $('#category').change(function(v) {
+                var cate_code = v.target.value;
+                load_sub(cate_code)
+                $('#subcategory').val('')
+            });
+
+            function load_sub(cate_code) {
+                $('#subcategory').empty()
+                var url = url_global + '/api/v1_0/master/getcombosubcate/' + cate_code
+                $.get(url).done(function(data) {
+
+                    var append = ""
+                    if (data['STATUS'] == 1) {
+                        var dataRes = data['RESULT']
+                        if (dataRes.length != 0) {
+                            for (var i = 0; i < dataRes.length; i++) {
+                                var SUB_CATE_CODE = dataRes[i]['value']
+                                var SUB_CATE_NAME_TH = dataRes[i]['label']
+
+                                append = append + "<option value='" + SUB_CATE_CODE + "'>" + SUB_CATE_NAME_TH + "</option>";
+                            }
+                            $('#subcategory').append(append)
 
                         } else {
                             alert("dataRes.length != 0 |||||| ไม่พบข้อมูล");
@@ -139,29 +162,23 @@ if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
 
             $("#btn0").click(function() {
                 var category = $('#category').val();
-                var subcateth = $('#subcateth').val().trim();
-                var subcateen = $('#subcateen').val().trim();
+                var subcategory = $('#subcategory').val();
+                var typecate = $('#typecate').val().trim();
 
-                // alert(category)
-                // alert(subcateth)
-                // alert(subcateen)
-
-                if (category.trim().length > 0 && subcateth.trim().length > 0 && subcateen.trim().length > 0) {
+                if (category.trim().length > 0 && subcategory.trim().length > 0 && typecate.trim().length > 0) {
                     // alert('okkkk');
-                    $.post(url_global + "/api/v1_0/master/getcombosubcate", {
+                    $.post(url_global + "/api/v1_0/master/getcombotypecate", {
                         "CATE_CODE": category,
-                        "SUB_CATE_NAME_TH": subcateth,
-                        "SUB_CATE_NAME_EN": subcateen,
+                        "SUB_CATE_CODE": subcategory,
+                        "TYPE_CATE_NAME_TH": typecate,
                     }).done(function(data) {
                         // console.log(data)
                         if (data['STATUS'] == 1) {
                             var dataRes = data['RESULT']
                             if (dataRes == 'SUCCESS') {
                                 alert("บันทึกสำเร็จ")
-                                // window.location = './listsubcate.php'
-                                $('#subcateth').val('');
-                                $('#subcateen').val('');
-
+                                // window.location = './listtypecate.php'
+                                $('#typecate').val('');
                             } else {
                                 alert("ไม่สำเร็จ แจ้งแอดมิน")
 
@@ -169,17 +186,18 @@ if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
                         } else {
                             alert("ไม่สำเร็จ แจ้งแอดมิน")
                         }
+
                     });
                 } else {
                     if (category.trim().length == 0) {
-                        alert('ใส่ Category');
+                        alert('ใส่ category');
                         $('#category').focus();
-                    } else if (subcateth.trim().length == 0) {
-                        alert('ใส่ SubCategory ชื่อไทย');
-                        $('#subcateth').focus();
-                    } else if (subcateen.trim().length == 0) {
-                        alert('ใส่ SubCategory ชื่ออังกฤษ');
-                        $('#subcateen').focus();
+                    } else if (subcategory.trim().length == 0) {
+                        alert('ใส่ SubCategory');
+                        $('#subcategory').focus();
+                    } else if (typecate.trim().length == 0) {
+                        alert('ใส่ TypeCategory ชื่อไทย');
+                        $('#typecate').focus();
                     }
                 }
 
@@ -187,6 +205,7 @@ if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
 
         })
     </script>
+
 
 </body>
 

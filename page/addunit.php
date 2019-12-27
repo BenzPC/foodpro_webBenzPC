@@ -3,6 +3,9 @@ session_start();
 if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
     header('Location: ../logout.php');
 }
+
+$configs = include('../config/constants.php');
+$url_global = $configs['url_global'];
 ?>
 
 <!doctype html>
@@ -14,14 +17,14 @@ if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Admin FoodPro</title>
-    <?php include_once 'inc/meta.php' ?>
+    <?php include_once '../inc/meta.php' ?>
 </head>
 
 <body>
-    <?php include_once 'inc/navbar.php' ?>
+    <?php include_once '../inc/navbar.php' ?>
     <div class="container-fluid">
         <div class="row">
-            <?php include_once 'inc/sidemenu.php' ?>
+            <?php include_once '../inc/sidemenu.php' ?>
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <div class="row justify-content-center">
                     <div class="col-12">
@@ -66,10 +69,12 @@ if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
 
     <script>
         $(document).ready(function() {
-            const url_global = 'http://203.150.52.242:4200';
+            // const url_global = 'http://203.150.52.242:4200';
             // const url_global = 'http://192.168.1.175:4200';
             // const url_global = 'https://apidev.foodproonline.com';
             // const url_global = 'http://203.150.52.247:4200';
+            const url_global = '<?= $url_global ?>';
+
             $("#ISsub_dashboard5").attr('style', "color : brown");
             $("#btn0").click(function() {
                 var unitth = $('#unitth').val().trim();

@@ -4,11 +4,11 @@ session_start();
 date_default_timezone_set("Asia/Bangkok");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-include_once 'config/connection.php';
-include_once 'config/function.php';
+include_once '../config/connection.php';
+include_once '../config/function.php';
 
 
-$configs = include('config/constants.php');
+$configs = include('../config/constants.php');
 $url_global = $configs['url_global'];
 $SOSS = (isset($_GET['SO'])) ? $_GET['SO'] : '';
 
@@ -35,7 +35,8 @@ if (empty($_SESSION['name'])) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Document</title>
-  <?php include_once 'inc/meta.php' ?>
+  <?php include_once '../inc/meta.php' ?>
+
  
   <style>
     .switch {
@@ -104,10 +105,10 @@ if (empty($_SESSION['name'])) {
 </head>
 
 <body>
-  <?php include_once 'inc/navbar.php' ?>
+  <?php include_once '../inc/navbar.php' ?>
   <div class="container-fluid">
     <div class="row">
-      <?php include_once 'inc/sidemenu.php' ?>
+      <?php include_once '../inc/sidemenu.php' ?>
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 
         <div class="row justify-content-center">
