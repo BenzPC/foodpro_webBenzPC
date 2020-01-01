@@ -55,12 +55,12 @@ $url_global = $configs['url_global'];
                                             </tbody>
 
                                         </table>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2" id="btnModalUpBanner" hidden>
+                                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2" id="btnModalUpBanner" hidden>
                                             Upload Banner
-                                        </button>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="btnModalUpProfile" hidden>
+                                        </button> -->
+                                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="btnModalUpProfile" hidden>
                                             Upload Profile
-                                        </button>
+                                        </button> -->
                                     </div>
                                 </div>
                             </div>
@@ -167,6 +167,7 @@ $url_global = $configs['url_global'];
             // const url_global = 'https://apidev.foodproonline.com';
             // const url_global = 'http://203.150.52.247:4200';
             const url_global = '<?= $url_global ?>';
+            $("#ISsub_dashboard3").attr('style', "color : brown");
 
             function readURL(input) {
                 if (input.files && input.files[0]) {
@@ -190,16 +191,18 @@ $url_global = $configs['url_global'];
 
             $("#IMGBANNER").change(function() {
                 readURL(this);
-            });
+            }); 
             $("#IMGPEOFILE").change(function() {
                 readURL2(this);
             });
 
-
-
-
-
-            const urll = url_global + '/api/v1_0/master/gettablesubcate'
+            const urll = url_global + '/api/v1_0/master/gettablesubcate';
+            // console.log(urll['RESULT']);
+            // $.get(urll).done(function(jsonData) {
+            //     console.log(jsonData);
+            //     var dataRes = jsonData['RESULT'];
+            //     console.log(dataRes);
+            // });
             var tablePropertygroup1 = $('#example').DataTable({
                 "ajax": {
                     "url": urll,
@@ -261,11 +264,7 @@ $url_global = $configs['url_global'];
                         "data": "SUB_CATE_IMG_PATH",
                         render: function(data, type, row) {
                             if (row.SUB_CATE_IMG_PATH == null) {
-                                row.select
-                                console.log('====================================');
-                                console.log(row.columnDefs);
-                                console.log('====================================');
-                                return '<button class="btnUploadProfile  btn-warning" id="btnUploadProfile"  type="button" onclick="clickProfile(' + "'" + row.CATE_CODE + "'," + "'" + row.SUB_CATE_CODE + "'," +"'" + row.SUB_CATE_NAME_TH + "'" +  ')">Upload</button>';
+                                return '<button class="btnUploadProfile  btn-warning"  type="button" data-toggle="modal" data-target="#myModal2" id="btnModalUpBanner">Upload</button>';
                             } else {
                                 return '<button class="btnUploadProfile" id="btnUploadProfile" type="button" disabled>Upload</button>';
                             }
@@ -274,14 +273,12 @@ $url_global = $configs['url_global'];
                         "data": "SUB_CATE_IMG_BANNER",
                         render: function(data, type, row) {
                             if (row.SUB_CATE_IMG_BANNER == null) {
-                                return '<button class="btnUploadBanner btn-warning" id="btnUploadBanner" type="button" onclick="clickBanner(' + "'" + row.CATE_CODE + "'," + "'" + row.SUB_CATE_CODE + "'," +"'" + row.SUB_CATE_NAME_TH + "'" +  ')">Upload</button>';
+                                return '<button class="btnUploadBanner btn-warning"  type="button" data-toggle="modal" data-target="#myModal" id="btnModalUpProfile">Upload</button>';
                             } else {
                                 return '<button class="btnUploadBanner" id="btnUploadBanner" type="button" disabled>Upload</button>';
                             }
                         }
                     },
-
-
                 ],
                 "oLanguage": {
                     "sProcessing": "กำลังดำเนินการ...",
@@ -301,7 +298,9 @@ $url_global = $configs['url_global'];
                     }
                 },
 
+
             });
+
             // var ss = "";
             tablePropertygroup1.on('order.dt search.dt', function() {
                 tablePropertygroup1.column(0, {
@@ -315,10 +314,29 @@ $url_global = $configs['url_global'];
                 });
             }).draw();
 
+            $('#example tbody').on('click', 'tr', function() {
 
-console.log('====================================');
-// console.log("duck",ss);
-console.log('====================================');
+                var data = $(this).find('td:eq(0)').text();
+                var data1 = tablePropertygroup1.row(this).data();
+
+                $('#modal-title').html(' ID: ' + data);
+                $('#modal-body').html(' เพิ่มภาพโปรไฟล์ ' + data1.SUB_CATE_NAME_TH)
+                $('#strcatecode').val(data1.CATE_CODE);
+                $('#strsubcatecode').val(data1.SUB_CATE_CODE);
+
+                $('#modal-title2').html(' ID: ' + data);
+                $('#modal-body2').html(' เพิ่มภาพแบรนเนอร์ ' + data1.SUB_CATE_NAME_TH)
+                $('#strcatecode2').val(data1.CATE_CODE);
+                $('#strsubcatecode2').val(data1.SUB_CATE_CODE);
+
+                $('#IMGBANNERShow').attr('src', "");
+                $('#IMGPEOFILEShow').attr('src', "");
+                $('#IMGBANNER').val("");
+                $('#IMGPEOFILE').val("");
+                // document.getElementById('IMGBANNER').value = "";
+                // document.getElementById('IMGPEOFILE').value = "";
+                
+            });
 
 
             $('#UploadProfile').click(function(event) {
@@ -407,25 +425,7 @@ console.log('====================================');
                     }
                 });
             });
-
-
         });
-
-        function clickProfile(CATE_CODE,SUB_CATE_CODE,SUB_CATE_NAME_TH) {
-            $("#btnModalUpProfile").click();
-            $('#modal-title').html(' ID: ' + SUB_CATE_NAME_TH);
-            $('#modal-body').html(' เพิ่มภาพโปรไฟล์ ' + SUB_CATE_NAME_TH)
-            $('#strcatecode').val(CATE_CODE);
-            $('#strsubcatecode').val(SUB_CATE_CODE);
-        };
-
-        function clickBanner(CATE_CODE,SUB_CATE_CODE,SUB_CATE_NAME_TH) {
-            $("#btnModalUpBanner").click();
-            $('#modal-title2').html(' ID: ' + SUB_CATE_NAME_TH);
-            $('#modal-body2').html(' เพิ่มภาพแบรนเนอร์ ' + SUB_CATE_NAME_TH)
-            $('#strcatecode2').val(CATE_CODE);
-            $('#strsubcatecode2').val(SUB_CATE_CODE);
-        };
     </script>
 
 </body>
