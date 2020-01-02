@@ -1,7 +1,11 @@
 <?php
 session_start();
+
+if (empty($_SESSION['name'])) {
+    header('Location: ../');
+  }
 if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
-    header('Location: ../logout.php');
+    header('Location: listshop.php');
 }
 
 $configs = include('../config/constants.php');
@@ -68,7 +72,9 @@ $url_global = $configs['url_global'];
             // const url_global = 'https://apidev.foodproonline.com';
             // const url_global = 'http://203.150.52.247:4200';
             const url_global = '<?= $url_global ?>';
-            const urll = url_global + '/api/v1_0/master/gettableunit'
+            const urll = url_global + '/api/v1_0/master/gettableunit';
+            $("#ISsub_dashboard5").attr('style', "color : brown");
+
             var tablePropertygroup1 = $('#example').DataTable({
                 "ajax": {
                     "url": urll,

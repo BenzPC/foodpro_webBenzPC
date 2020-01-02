@@ -55,7 +55,7 @@ use PHPMailer\PHPMailer\Exception;
                 <input type="text" class="form-control" id="txtuser" name="username" placeholder="ชื่อผู้ใช้งานระบบ">
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="margin-bottom-pass" >
               <div class="input-group">
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="fas fa-key"></i></div>
@@ -63,16 +63,22 @@ use PHPMailer\PHPMailer\Exception;
                 <input type="password" class="form-control" id="txtpass" name="password" placeholder="รหัสผ่าน">
               </div>
             </div>
+            <div class="form-group" style="margin-bottom: 7px;text-align: right;" >
+              <small id="small_err" class="text-muted" hidden>
+                <font color="red">ชื่อผู้ใช้หรือรหัสไม่ถูกต้อง</font>
+              </small>
+            </div>
+
             <div class="form-group">
               <button class="btn btn-success btn-sm btn-block" id="btnLogin" name="btnLogin">
                 <i class="fa fa-check pr-2"></i>เข้าสู่ระบบ
               </button>
             </div>
-            <div class="form-group row justify-content-center">
+            <!-- <div class="form-group row justify-content-center">
               <a href="javascript:void(0)" data-toggle="modal" data-target="#forgotModal">
                 <i class="fa fa-user-times pr-2"></i>ลืมรหัสผ่าน?
               </a>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -131,53 +137,48 @@ use PHPMailer\PHPMailer\Exception;
 <script>
   $(document).ready(function() {
     var input = document.getElementById("txtpass");
-
-input.addEventListener("keyup", function(event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    document.getElementById("btnLogin").click();
-  }
-});
+    var uid;
+    input.addEventListener("keyup", function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("btnLogin").click();
+      }
+    });
 
     //check Username Password
     $('#btnLogin').click(function() {
       var user = $('#txtuser').val();
       var pass = $('#txtpass').val();
-
       if (user === 'sutida' && pass === 'panrodcrm01') {
-
-        <?php
-        ob_start();
-        session_start();
-        $_SESSION['name'] = 'sutida';
-
-
-        ?>
-        console.log("1234");
-        window.location.replace("manage1.php");
-
+        uid = "ADMIN";
+        ajax_login();
       } else if (user === '1234' && pass === '1234') {
-        // $_SESSION['name']='sutida';
-        <?php
-        ob_start();
-        session_start();
-        $_SESSION['name'] = 'admin';
-
-
-        ?>
-
-        console.log("USERNANE111112");
-        window.location.replace("manage1.php");
-
+        uid = "Super Admin";
+        ajax_login();
       } else {
-        console.log("ERROR USERNANE");
-
+        uid = "err"
+        $('#txtuser').val("");
+        $('#txtpass').val("");
+        $('#margin-bottom-pass').attr("style" , "margin-bottom: 7px");
+        document.getElementById('small_err').hidden = false;
       }
-
     });
 
+    function ajax_login() {
+      $.ajax({
+        type: "POST",
+        url: 'login.php?uid=' + uid,
+        data: "",
+        success: function(result) {
+          // alert(result.status);
+          $('#margin-bottom-pass').attr("style" , "margin-bottom: 16px");
+          document.getElementById('small_err').hidden = true;
+          window.location.replace("page/listshop.php");
+        }
+      });
 
-  })
+    }
+  });
 </script>
 
 </html>

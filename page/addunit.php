@@ -1,7 +1,10 @@
 <?php
 session_start();
+if (empty($_SESSION['name'])) {
+    header('Location: ../');
+  }
 if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
-    header('Location: ../logout.php');
+    header('Location: listshop.php');
 }
 
 $configs = include('../config/constants.php');

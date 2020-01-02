@@ -1,7 +1,12 @@
 <?php
 session_start();
+
+if (empty($_SESSION['name'])) {
+    header('Location: ../');
+  }
+
 if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
-    header('Location: ../logout.php');
+    header('Location: listshop.php');
 }
 
 $configs = include('../config/constants.php');
@@ -32,7 +37,7 @@ $url_global = $configs['url_global'];
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header" style="margin-bottom: 10px;">
-                                <h5 class="text-center">รายชื่อ typecategory </h5>
+                                <h5 class="text-center">รายชื่อ SubTypeCategory </h5>
                             </div>
                             <!-- Table -->
                             <div class="row">
@@ -73,7 +78,8 @@ $url_global = $configs['url_global'];
             // const url_global = 'https://apidev.foodproonline.com';
             // const url_global = 'http://203.150.52.247:4200';
             const url_global = '<?= $url_global ?>';
-         
+            $("#ISsub_dashboard4").attr('style', "color : brown");
+
             const urll = url_global + '/api/v1_0/master/gettabletypecate'
             var tablePropertygroup1 = $('#example').DataTable({
                 "ajax": {

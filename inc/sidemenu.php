@@ -39,7 +39,7 @@
         <div id="sub_dashboard" class="collapse <?php if ($profile || $chgpwd) echo ''; ?>">
           <ul class="nav flex-column">
             <li class="nav-item <?php if ($profile) echo 'active' ?>">
-              <a class="nav-link sub-menu" href="manage1.php">
+              <a class="nav-link sub-menu" href="listshop.php">
                 <small>
                   <i class="fas fa-list px-2"></i>
                   List Shop
@@ -48,7 +48,7 @@
             </li>
             <li class="nav-item <?php if ($profile) echo 'active' ?>">
               <!-- <a class="nav-link sub-menu" href="addshop.php"> -->
-              <a class="nav-link sub-menu" href="editdetailshop.php">
+              <a class="nav-link sub-menu" href="detailshop.php">
                 <small>
                   <i class="fas fa-clipboard-check px-2" ></i>
                   Add Shop

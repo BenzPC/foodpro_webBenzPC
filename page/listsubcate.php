@@ -1,11 +1,16 @@
 <?php
 session_start();
+if (empty($_SESSION['name'])) {
+    header('Location: ../');
+  }
+
 if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
-    header('Location: ../logout.php');
+    header('Location: listshop.php');
 }
 
 $configs = include('../config/constants.php');
 $url_global = $configs['url_global'];
+
 ?>
 
 <!doctype html>
@@ -264,7 +269,7 @@ $url_global = $configs['url_global'];
                         "data": "SUB_CATE_IMG_PATH",
                         render: function(data, type, row) {
                             if (row.SUB_CATE_IMG_PATH == null) {
-                                return '<button class="btnUploadProfile  btn-warning"  type="button" data-toggle="modal" data-target="#myModal2" id="btnModalUpBanner">Upload</button>';
+                                return '<button class="btnUploadProfile  btn-warning"  type="button" data-toggle="modal"  data-target="#myModal" id="btnModalUpProfile" >Upload</button>';
                             } else {
                                 return '<button class="btnUploadProfile" id="btnUploadProfile" type="button" disabled>Upload</button>';
                             }
@@ -273,7 +278,7 @@ $url_global = $configs['url_global'];
                         "data": "SUB_CATE_IMG_BANNER",
                         render: function(data, type, row) {
                             if (row.SUB_CATE_IMG_BANNER == null) {
-                                return '<button class="btnUploadBanner btn-warning"  type="button" data-toggle="modal" data-target="#myModal" id="btnModalUpProfile">Upload</button>';
+                                return '<button class="btnUploadBanner btn-warning"  type="button" data-toggle="modal" data-target="#myModal2" id="btnModalUpBanner">Upload</button>';
                             } else {
                                 return '<button class="btnUploadBanner" id="btnUploadBanner" type="button" disabled>Upload</button>';
                             }

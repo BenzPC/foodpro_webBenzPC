@@ -1,7 +1,11 @@
 <?php
 session_start();
+
+if (empty($_SESSION['name'])) {
+    header('Location: ../');
+  }
 if (empty($_SESSION['name']) || $_SESSION['name'] != 'Super Admin') {
-    header('Location: ../logout.php');
+    header('Location: listshop.php');
 }
 
 $configs = include('../config/constants.php');
@@ -61,8 +65,8 @@ $url_global = $configs['url_global'];
                                                         <div class="col-xl">
                                                             <div class="position-relative form-group">
                                                                 <label for="" class="">Sub Category</label>
-                                                                <input name="subcategory" id="subcategory" placeholder="" type="text" class="form-control">
-                                                            </div>
+                                                                <select name="subcategory" id="subcategory" class="form-control">
+                                            </select>                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -98,112 +102,111 @@ $url_global = $configs['url_global'];
 
             $("#ISsub_dashboard4").attr('style', "color : brown");
             load_cate()
-
-            function load_cate() {
-                $('#category').empty()
-                $('#subcategory').empty()
-                $.get(url_global + '/api/v1_0/master/getcombocate').done(function(data) {
-                    var append = ""
-                    if (data['STATUS'] == 1) {
-                        var dataRes = data['RESULT']
-                        if (dataRes.length != 0) {
-                            for (var i = 0; i < dataRes.length; i++) {
-                                var CATE_CODE = dataRes[i]['value']
-                                var CATE_NAME_TH = dataRes[i]['label']
-
-                                append = append + "<option value='" + CATE_CODE + "'>" + CATE_NAME_TH + "</option>";
-                            }
-
-                            $('#category').append(append)
-                            load_sub($('#category').val())
-                            //alert(append)
-
-                        } else {
-                            alert("dataRes.length != 0 |||||| ไม่พบข้อมูล");
-                        }
-                    } else {
-                        alert("Status ไม่เท่ากับ 1")
-                    }
-                })
-            }
-
-            $('#category').change(function(v) {
-                var cate_code = v.target.value;
-                load_sub(cate_code)
-                $('#subcategory').val('')
-            });
-
-            function load_sub(cate_code) {
-                $('#subcategory').empty()
-                var url = url_global + '/api/v1_0/master/getcombosubcate/' + cate_code
-                $.get(url).done(function(data) {
-
-                    var append = ""
-                    if (data['STATUS'] == 1) {
-                        var dataRes = data['RESULT']
-                        if (dataRes.length != 0) {
-                            for (var i = 0; i < dataRes.length; i++) {
-                                var SUB_CATE_CODE = dataRes[i]['value']
-                                var SUB_CATE_NAME_TH = dataRes[i]['label']
-
-                                append = append + "<option value='" + SUB_CATE_CODE + "'>" + SUB_CATE_NAME_TH + "</option>";
-                            }
-                            $('#subcategory').append(append)
-
-                        } else {
-                            alert("dataRes.length != 0 |||||| ไม่พบข้อมูล");
-                        }
-                    } else {
-                        alert("Status ไม่เท่ากับ 1")
-                    }
-                })
-            }
-
-
-            $("#btn0").click(function() {
-                var category = $('#category').val();
-                var subcategory = $('#subcategory').val();
-                var typecate = $('#typecate').val().trim();
-
-                if (category.trim().length > 0 && subcategory.trim().length > 0 && typecate.trim().length > 0) {
-                    // alert('okkkk');
-                    $.post(url_global + "/api/v1_0/master/getcombotypecate", {
-                        "CATE_CODE": category,
-                        "SUB_CATE_CODE": subcategory,
-                        "TYPE_CATE_NAME_TH": typecate,
-                    }).done(function(data) {
-                        // console.log(data)
+                function load_cate() {
+                    $('#category').empty()
+                    $('#subcategory').empty()
+                    $.get(url_global + '/api/v1_0/master/getcombocate').done(function(data) {
+                        var append = ""
                         if (data['STATUS'] == 1) {
                             var dataRes = data['RESULT']
-                            if (dataRes == 'SUCCESS') {
-                                alert("บันทึกสำเร็จ")
-                                // window.location = './listtypecate.php'
-                                $('#typecate').val('');
-                            } else {
-                                alert("ไม่สำเร็จ แจ้งแอดมิน")
+                            if (dataRes.length != 0) {
+                                for (var i = 0; i < dataRes.length; i++) {
+                                    var CATE_CODE = dataRes[i]['value']
+                                    var CATE_NAME_TH = dataRes[i]['label']
 
+                                    append = append + "<option value='" + CATE_CODE + "'>" + CATE_NAME_TH + "</option>";
+                                }
+
+                                $('#category').append(append)
+                                load_sub($('#category').val())
+                                //alert(append)
+
+                            } else {
+                                alert("dataRes.length != 0 |||||| ไม่พบข้อมูล");
                             }
                         } else {
-                            alert("ไม่สำเร็จ แจ้งแอดมิน")
+                            alert("Status ไม่เท่ากับ 1")
                         }
-
-                    });
-                } else {
-                    if (category.trim().length == 0) {
-                        alert('ใส่ category');
-                        $('#category').focus();
-                    } else if (subcategory.trim().length == 0) {
-                        alert('ใส่ SubCategory');
-                        $('#subcategory').focus();
-                    } else if (typecate.trim().length == 0) {
-                        alert('ใส่ TypeCategory ชื่อไทย');
-                        $('#typecate').focus();
-                    }
+                    })
                 }
 
-            });
+                $('#category').change(function(v) {
+                    var cate_code = v.target.value;
+                    load_sub(cate_code)
+                    $('#subcategory').val('')
+                });
 
-        })
+                function load_sub(cate_code) {
+                    $('#subcategory').empty()
+                    var url = url_global + '/api/v1_0/master/getcombosubcate/' + cate_code
+                    $.get(url).done(function(data) {
+
+                        var append = ""
+                        if (data['STATUS'] == 1) {
+                            var dataRes = data['RESULT']
+                            if (dataRes.length != 0) {
+                                for (var i = 0; i < dataRes.length; i++) {
+                                    var SUB_CATE_CODE = dataRes[i]['value']
+                                    var SUB_CATE_NAME_TH = dataRes[i]['label']
+
+                                    append = append + "<option value='" + SUB_CATE_CODE + "'>" + SUB_CATE_NAME_TH + "</option>";
+                                }
+                                $('#subcategory').append(append)
+
+                            } else {
+                                alert("dataRes.length != 0 |||||| ไม่พบข้อมูล");
+                            }
+                        } else {
+                            alert("Status ไม่เท่ากับ 1")
+                        }
+                    })
+                }
+
+
+                $("#btn0").click(function() {
+                    var category = $('#category').val();
+                    var subcategory = $('#subcategory').val();
+                    var typecate = $('#typecate').val().trim();
+
+                    if (category.trim().length > 0 && subcategory.trim().length > 0 && typecate.trim().length > 0) {
+                        // alert('okkkk');
+                        $.post(url_global + "/api/v1_0/master/getcombotypecate", {
+                            "CATE_CODE": category,
+                            "SUB_CATE_CODE": subcategory,
+                            "TYPE_CATE_NAME_TH": typecate,
+                        }).done(function(data) {
+                            // console.log(data)
+                            if (data['STATUS'] == 1) {
+                                var dataRes = data['RESULT']
+                                if (dataRes == 'SUCCESS') {
+                                    alert("บันทึกสำเร็จ")
+                                    // window.location = './listtypecate.php'
+                                    $('#typecate').val('');
+                                } else {
+                                    alert("ไม่สำเร็จ แจ้งแอดมิน")
+                                    
+                                }
+                            } else {
+                                alert("ไม่สำเร็จ แจ้งแอดมิน")
+                            }
+
+                        });
+                    } else {
+                        if (category.trim().length == 0) {
+                            alert('ใส่ category');
+                            $('#category').focus();
+                        } else if (subcategory.trim().length == 0) {
+                            alert('ใส่ SubCategory');
+                            $('#subcategory').focus();
+                        } else if (typecate.trim().length == 0) {
+                            alert('ใส่ TypeCategory ชื่อไทย');
+                            $('#typecate').focus();
+                        }
+                    }
+
+                });
+
+            })
     </script>
 
 

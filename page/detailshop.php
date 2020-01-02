@@ -17,7 +17,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 if (empty($_SESSION['name'])) {
-  header('Location: index.php');
+  header('Location: ../');
 }
 
 // $user_level = getUserLevel($_SESSION['user_code']);
@@ -446,9 +446,16 @@ if (empty($_SESSION['name'])) {
 
           SwitchStorefun();
           load_province(shop.PROVINCE_CODE, shop.DISTRICT_CODE)
-          location_dc(shop.DC_LOCATION_ID)
-          load_bank(shop.BANK_CODE);
 
+          
+          if(shop.DC_LOCATION_ID){
+            location_dc(shop.DC_LOCATION_ID)
+          }else{
+            load_region();
+
+          }
+          load_bank(shop.BANK_CODE);
+          // load_region();
           // ใส่ชื่อรูป
           imgProfile = shop.SHOP_IMG_PATH_PROFILE;
           imgBanner = shop.SHOP_IMG_PATH_BANNER;
@@ -463,7 +470,7 @@ if (empty($_SESSION['name'])) {
         $('#imgproduct1').attr('hidden', "true");
         $('#imgproduct2').attr('hidden', "true");
         load_province();
-        location_dc();
+        // location_dc();
         SwitchStorefun();
         load_region();
         load_bank();
@@ -675,8 +682,6 @@ if (empty($_SESSION['name'])) {
         })
       }
 
-
-
       function load_region(region, dcLocationId) {
         $('#region').empty()
         $('#servicecenter').empty()
@@ -737,7 +742,6 @@ if (empty($_SESSION['name'])) {
           }
 
           $('#region').change(function() {
-            alert("55");
             $('#servicecenter').empty()
             // alert($('#region').val())
             if ($('#region').val() == "C") {
