@@ -10,7 +10,7 @@ include_once '../config/function.php';
 
 $configs = include('../config/constants.php');
 $url_global = $configs['url_global'];
-$SOSS = (isset($_GET['SO'])) ? $_GET['SO'] : '';
+$SO_CODE = (isset($_GET['SO'])) ? $_GET['SO'] : '';
 
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -37,7 +37,7 @@ if (empty($_SESSION['name'])) {
   <title>Document</title>
   <?php include_once '../inc/meta.php' ?>
 
- 
+
   <style>
     .switch {
       position: relative;
@@ -116,7 +116,7 @@ if (empty($_SESSION['name'])) {
             <div class="card">
               <div class="card-header">
                 <h5 class="text-center">
-                  <?php if ($SOSS == "") {
+                  <?php if ($SO_CODE == "") {
                     echo "เพิ่ม Shop Vendor";
                   } else {
                     echo "แก้ไข Shop Vendor";
@@ -198,6 +198,7 @@ if (empty($_SESSION['name'])) {
                             <div class="col-md-6">
                               <div class="position-relative form-group">
                                 <label for="" class="">นามสกุล</label>
+                                <!-- <input name="lastname" id="lastname" placeholder="" type="text" class="form-control"> -->
                                 <input name="lastname" id="lastname" placeholder="" type="text" class="form-control">
                               </div>
                             </div>
@@ -291,7 +292,7 @@ if (empty($_SESSION['name'])) {
                                 </select>
                                 <br>
                                 <label class="switch">
-                                  <input type="checkbox" id="InSwitchStore" value="2" checked>
+                                  <input type="checkbox" id="InSwitchStore" name="InSwitchStore" value="2" checked>
                                   <span class="slider round switch_sides " id="SwitchStore">
                                     <span class="span12" id="span12">
                                     </span>
@@ -349,7 +350,7 @@ if (empty($_SESSION['name'])) {
     $(document).ready(function() {
       var admin_name = '<?php echo $_SESSION['name']; ?>'
       const url_global = '<?= $url_global ?>';
-      const SOO = '<?= $SOSS ?>';
+      const SOO = '<?= $SO_CODE ?>';
       var imgProfile = "";
       var imgBanner = "";
       var SaveConfirmShop = "";
@@ -447,10 +448,10 @@ if (empty($_SESSION['name'])) {
           SwitchStorefun();
           load_province(shop.PROVINCE_CODE, shop.DISTRICT_CODE)
 
-          
-          if(shop.DC_LOCATION_ID){
+
+          if (shop.DC_LOCATION_ID) {
             location_dc(shop.DC_LOCATION_ID)
-          }else{
+          } else {
             load_region();
 
           }
@@ -908,11 +909,11 @@ if (empty($_SESSION['name'])) {
 
       function CheckSave_Confirm() {
         // const params = getParams(window.location.href)
-        var id = '<?= $SOSS; ?>';
+        var id = '<?= $SO_CODE; ?>';
         var emailFilter = /^.+@.+\..{2,3}$/; // ตรวจอีเมล
         var emailerr = ""; // อีเมลผิด
         // console.log(id);
-        
+
         // var url = url_global + '/api/v1_0/product'
         // event.preventDefault();
         var form1 = $('#fileEditForm')[0];
@@ -934,7 +935,7 @@ if (empty($_SESSION['name'])) {
         var active_lalamove = $('#active_lalamove').val();
         var owner_pack = $('#owner_pack').val();
         var receive_from_home = $('#receive_from_home').val();
-        var dcName = $('#servicecenter option:selected').text();
+        // var dcName = $('#servicecenter option:selected').text();
         var dcLocationId = $('#servicecenter').val();
         var accountnumber = $('#accountnumber').val().trim();
         var accountname = $('#accountname').val().trim();
@@ -1026,7 +1027,6 @@ if (empty($_SESSION['name'])) {
         //   document.getElementById("editimgproduct2").focus();
         // }
 
-
         if (shopname.trim().length > 0 && address.trim().length > 0 && province.trim().length > 0 && district.trim().length > 0 &&
           postcode.trim().length > 0 && firstname.trim().length > 0 && lastname.trim().length > 0 && uid.trim().length > 0 &&
           email.trim().length > 0 && tel.trim().length > 0 && password.trim().length > 0 && accountnumber.trim().length > 0 &&
@@ -1042,12 +1042,14 @@ if (empty($_SESSION['name'])) {
               } else {
                 if (SaveConfirmShop == "Save") {
                   if (imgProfile.length > 0 && imgBanner.length > 0) {
+                   
                     SaveShop();
                   } else {
                     alert('ใส่รูป');
                   }
                 } else {
                   ConfirmShop();
+                 
                 }
               }
             }
@@ -1059,32 +1061,35 @@ if (empty($_SESSION['name'])) {
 
       function SaveShop() {
         var url = url_global + '/api/v1_0/shop/admingenshop/'
+        var form1 = $('#fileEditForm')[0];
+        var data = new FormData(form1);
+
         alert("บันทึก");
-        // $.ajax({
-        //   type: "POST",
-        //   enctype: 'multipart/form-data',
-        //   url: url,
-        //   data: data,
-        //   processData: false,
-        //   contentType: false,
-        //   cache: false,
-        //   timeout: 600000,
-        //   success: function(data) {
-        //     if (data['STATUS'] == 1) {
-        //       if (data['RESULT'] == 'SUCCESS') {
-        //         alert("แก้ไขข้อมูลเสร็จสิ้น");
-        //         location.reload();
-        //       } else {
-        //         alert("ผิดพลาด");
-        //       }
-        //     } else {
-        //       alert("ผิดพลาด");
-        //     }
-        //   },
-        //   error: function(e) {
-        //     console.log("ERROR : ", e);
-        //   }
-        // });
+        $.ajax({
+          type: "POST",
+          enctype: 'multipart/form-data',
+          url: url,
+          data: data,
+          processData: false,
+          contentType: false,
+          cache: false,
+          timeout: 600000,
+          success: function(data) {
+            if (data['STATUS'] == 1) {
+              if (data['RESULT'] == 'SUCCESS') {
+                alert("แก้ไขข้อมูลเสร็จสิ้น");
+                location.reload();
+              } else {
+                alert("ผิดพลาด");
+              }
+            } else {
+              alert("ผิดพลาด");
+            }
+          },
+          error: function(e) {
+            console.log("ERROR : ", e);
+          }
+        });
       };
 
       function ConfirmShop() {

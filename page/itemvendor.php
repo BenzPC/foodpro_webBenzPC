@@ -8,30 +8,29 @@ if (empty($_SESSION['name'])) {
     header('Location: ./login.php');
 }
 // echo $_SESSION['name'];
+$SO_CODE = (isset($_GET['SO'])) ? $_GET['SO'] : '';
+$SH_NAME = (isset($_GET['SH_NAME'])) ? $_GET['SH_NAME'] : '';
 
-$url_global = $configs['url_global'];
-$SHOP_CODE = $_REQUEST['SHOP_CODE'];
-$SHOP_NAME = $_REQUEST['SHOP_NAME'];
+// $url_global = $configs['url_global'];
+// $SHOP_CODE = $_REQUEST['SHOP_CODE'];
+// $SHOP_NAME = $_REQUEST['SHOP_NAME'];
 ?>
 
 <!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Language" content="en">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Admin FoodPro</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
-    <meta name="description" content="Wide selection of forms controls, using the Bootstrap 4 code base, but built with React.">
-    <meta name="msapplication-tap-highlight" content="no">
     <?php include_once '../inc/meta.php' ?>
-
 
 </head>
 
 <body>
+    <?php include_once '../inc/navbar.php' ?>
+
     <div class="container-fluid">
         <div class="row">
             <?php include_once '../inc/sidemenu.php' ?>
@@ -40,9 +39,17 @@ $SHOP_NAME = $_REQUEST['SHOP_NAME'];
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header" style="margin-bottom: 10px;">
-                                <h5 class="text-center">รายชื่อ Shop </h5>
+                                <h5 class="text-center">รายชื่อ สินค้า </h5>
                             </div>
-                            <!-- Table -->
+                            <div class="row">
+                                <div class="col-6" >
+                                    <h4 style="color: rgb(0, 0, 255); padding: 10px; padding-bottom: 0px;"><?php echo $SH_NAME; ?> </h4>
+                                    <!-- Table -->
+                                </div>
+                                <div class="col-6" style="text-align: right; padding-right: 25px;">
+                                <a  class="btn btn-primary" type="button"href="additem.php?SO=<?php echo $SO_CODE; ?>&SH_NAME=<?php echo $SH_NAME; ?> ">เพิ่ม / + /  เพิ่มไอเทม</a>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="table-responsive">
@@ -85,9 +92,7 @@ $SHOP_NAME = $_REQUEST['SHOP_NAME'];
 
 
     <!-- Button to Open the Modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="btnModalUpImg" style='display:none;'>
-        เพิ่มรูปสินค้า
-    </button>
+
     <!-- The Modal -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
@@ -103,30 +108,31 @@ $SHOP_NAME = $_REQUEST['SHOP_NAME'];
                 <div class="modal-body">
                     <p id="modal-body"></p>
                     <form id='fileUploadForm' method="post" enctype="multipart/form-data">
-                        เลือกรูปภาพ : <input type="file" name="IMG" accept="image/x-png,image/jpeg"><br>
+                        เลือกรูปภาพ : <input type="file" name="IMGItem" id="IMGItem" accept="image/x-png,image/jpeg"><br><br>
+                        <div class="row">
+                            <div class="col-md">
+                                <img id="IMGItemShow" style="width: inherit;">
+                            </div>
+                        </div>
                         <input type="hidden" name="SHOP_CODE" id="strshopcode">
                         <input type="hidden" name="CATE_CODE" id="strcatecode">
                         <input type="hidden" name="SUB_CATE_CODE" id="strsubcode">
                         <input type="hidden" name="TYPE_CATE_CODE" id="strtypecode">
                         <input type="hidden" name="ADMIN_NAME" id="admin_name"><br>
 
-                        <input id="UpImg" type="button" value="Upload Image" class="btn btn-primary">
                     </form>
                 </div>
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <input id="UpImg" type="button" value="บันทึก" class="btn btn-primary">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
                 </div>
 
             </div>
         </div>
     </div>
 
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2" id="btnModalDesc" style='display:none;'>
-        เพิ่มคำบรรยาย
-    </button>
     <!-- The Modal -->
     <div class="modal" id="myModal2">
         <div class="modal-dialog">
@@ -143,29 +149,26 @@ $SHOP_NAME = $_REQUEST['SHOP_NAME'];
                     <p id="modal-body2"></p>
                     <!-- <form id='fileUploadForm2' method="post" enctype="multipart/form-data"> -->
                     <!-- Select a file: <input type="file" name="IMG" accept="image/x-png,image/jpeg"><br> -->
-                    <textarea rows="15" cols="60" id='txtdesc'></textarea>
+                    <textarea rows="15" id='txtdesc' style="width: -webkit-fill-available;"></textarea>
                     <input type="hidden" name="SHOP_CODE" id="strshopcode2">
                     <input type="hidden" name="CATE_CODE" id="strcatecode2">
                     <input type="hidden" name="SUB_CATE_CODE" id="strsubcode2">
                     <input type="hidden" name="TYPE_CATE_CODE" id="strtypecode2">
 
-                    <input id="UpDesc" type="button" value="Upload Description" class="btn btn-primary">
                     <!-- </form> -->
                 </div>
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <input id="UpDesc" type="button" value="บันทึก" class="btn btn-primary">
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
                 </div>
 
             </div>
         </div>
     </div>
 
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal3" id="btnModalDim" style='display:none;'>
-        เพิ่ม Dimension
-    </button>
     <!-- The Modal -->
     <div class="modal" id="myModal3">
         <div class="modal-dialog">
@@ -207,12 +210,13 @@ $SHOP_NAME = $_REQUEST['SHOP_NAME'];
                     </div>
 
                     <br>
-                    <input id="UpDim" type="button" value="บันทึก" class="btn btn-primary">
                 </div>
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <input id="UpDim" type="button" value="บันทึก" class="btn btn-primary">
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
                 </div>
 
             </div>
@@ -253,25 +257,35 @@ $SHOP_NAME = $_REQUEST['SHOP_NAME'];
     <script>
         $(document).ready(function() {
             var admin_name = '<?php echo $_SESSION['name']; ?>'
-            var SHOP_CODE = '<?php echo $SHOP_CODE; ?>'
-            var SHOP_NAME = '<?php echo $SHOP_NAME; ?>'
 
+            const SOO = '<?= $SO_CODE ?>';
             const url_global = '<?php echo $url_global; ?>'
-            const urll = url_global + '/api/v1_0/master/getlistitemshop/V191220004';
-            $('#vendorname').html("<font color='blue'>" + SHOP_NAME + "</font>")
+            const urll = url_global + `/api/v1_0/master/getlistitemshop/${SOO}`;
 
 
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#IMGItemShow').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
 
-
-            $("#btnAddItem").click(function() {
-                // alert($('#vendorname').text())
-                window.location = './additem.php?SHOP_CODE=' + SHOP_CODE + '&SHOP_NAME=' + SHOP_NAME
+            $("#IMGItem").change(function() {
+                readURL(this);
             });
 
-            $("#btnListItem").click(function() {
-                // alert($('#vendorname').text())
-                window.location = './itemvendor.php?SHOP_CODE=' + SHOP_CODE + '&SHOP_NAME=' + SHOP_NAME
-            });
+            // $("#btnAddItem").click(function() {
+            //     // alert($('#vendorname').text())
+            //     window.location = './additem.php?SHOP_CODE=' + SHOP_CODE + '&SHOP_NAME=' + SHOP_NAME
+            // });
+
+            // $("#btnListItem").click(function() {
+            //     // alert($('#vendorname').text())
+            //     window.location = './itemvendor.php?SHOP_CODE=' + SHOP_CODE + '&SHOP_NAME=' + SHOP_NAME
+            // });
 
 
             var tablePropertygroup1 = $('#example').DataTable({
@@ -321,7 +335,7 @@ $SHOP_NAME = $_REQUEST['SHOP_NAME'];
                     {
                         "data": "GOODS_CODE",
                         render: function(data, type, row) {
-                            return '<a href="/edititemvender.php?SHOP_CODE=' + row.SHOP_CODE + '&GOODS_CODE=' + row.GOODS_CODE + ' ">' + row.GOODS_NAME_TH + '</a>';
+                            return '<a style="color: #3f6ad8;" href="edititemvender.php?SHOP_CODE=' + SOO + '&GOODS_CODE=' + row.GOODS_CODE + ' ">' + row.GOODS_NAME_TH + '</a>';
                         }
                     },
                     {
@@ -339,11 +353,9 @@ $SHOP_NAME = $_REQUEST['SHOP_NAME'];
                     {
                         "data": "SUM_WEIGHT"
                     },
-
                     {
                         "data": "SEND_NAME_TH"
                     },
-
                     {
                         "data": "DIM_NAME_TH"
                     },
@@ -358,10 +370,10 @@ $SHOP_NAME = $_REQUEST['SHOP_NAME'];
                         render: function(data, type, row) {
 
                             if (row.IMG < 4) {
-                                return "<button class='btnAddImg'> เพิ่มรูปสินค้า (" + row.IMG + ") </button>";
+                                return "<button class='btnAddImg btn btn-secondary' id='btnidAddImg' data-toggle='modal' data-target='#myModal'> เพิ่มรูปสินค้า (" + row.IMG + ") </button>";
 
                             } else {
-                                return "<button class='btnAddImg' disabled> เพิ่มรูปสินค้า (" + row.IMG + ") </button>";
+                                return "<button class='btnAddImg btn btn-secondary' id='btnidAddImg' disabled> เพิ่มรูปสินค้า (" + row.IMG + ") </button>";
 
                             }
                         }
@@ -369,16 +381,16 @@ $SHOP_NAME = $_REQUEST['SHOP_NAME'];
                     {
                         "data": "DESC",
                         render: function(data, type, row) {
-                            var DESC = row.DESC;
 
+                            var DESC = row.DESC;
                             if (DESC != null) {
                                 if (DESC.length == 0) {
-                                    return "<button class='btnDesc btn btn-danger'> เพิ่มคำบรรยาย </button>"
+                                    return "<button class='btnDesc btn btn-danger' data-toggle='modal' data-target='#myModal2'> เพิ่มคำบรรยาย </button>"
                                 } else {
-                                    return "<button class='btnDesc btn btn-success'> เพิ่มคำบรรยาย </button>"
+                                    return "<button class='btnDesc btn btn-success' data-toggle='modal' data-target='#myModal2'> เพิ่มคำบรรยาย </button>"
                                 }
                             } else {
-                                return "<button class='btnDesc btn btn-danger'> เพิ่มคำบรรยาย </button>"
+                                return "<button class='btnDesc btn btn-danger' data-toggle='modal' data-target='#myModal2'> เพิ่มคำบรรยาย </button>"
                             }
                         }
                     },
@@ -387,9 +399,9 @@ $SHOP_NAME = $_REQUEST['SHOP_NAME'];
                         render: function(data, type, row) {
                             var DIMX = row.GOODS_DIM_X;
                             if (DIMX == null) {
-                                return "<button class='btnDim btn btn-danger'> Dimension </button>"
+                                return "<button class='btnDim btn btn-danger' data-toggle='modal' data-target='#myModal3'> Dimension </button>"
                             } else {
-                                return "<button class='btnDim btn btn-success'> Dimension </button>"
+                                return "<button class='btnDim btn btn-success' data-toggle='modal' data-target='#myModal3'> Dimension </button>"
                             }
                         }
                     },
@@ -426,6 +438,76 @@ $SHOP_NAME = $_REQUEST['SHOP_NAME'];
                 });
             }).draw();
 
+            $('#example tbody').on('click', 'tr', function() {
+
+                var data = $(this).find('td:eq(0)').text();
+                var data1 = tablePropertygroup1.row(this).data();
+                //Modal 1
+                $('#strshopcode').val(SOO);
+                $('#strcatecode').val(data1.CATE_CODE);
+                $('#strsubcode').val(data1.SUB_CATE_CODE);
+                $('#strtypecode').val(data1.TYPE_CATE_CODE);
+                $('#admin_name').val(admin_name);
+                $('#modal-title').html('ชื่อสินค้า: ' + data1.GOODS_NAME_TH);
+                $('#IMGItemShow').attr('src', "");
+                $('#IMGItem').val("");
+                //Modal 3
+                $('#strshopcode2').val(SOO);
+                $('#strcatecode2').val(data1.CATE_CODE);
+                $('#strsubcode2').val(data1.SUB_CATE_CODE);
+                $('#strtypecode2').val(data1.TYPE_CATE_CODE);
+
+                $('#txtdesc').val('')
+                $('#modal-title2').html('ชื่อสินค้า: ' + data1.GOODS_NAME_TH);
+
+                $.get(url_global + '/api/v1_0/shop/getitemdesc/' + SOO + "/" + data1.CATE_CODE + "/" + data1.SUB_CATE_CODE + "/" + data1.TYPE_CATE_CODE).done(function(jsonData) {
+                    // console.log(jsonData)
+                    if (jsonData['STATUS'] == 1) {
+                        var dataRes = jsonData['RESULT']
+                        // $('#vendorname').html("<font color='blue'>" + dataRes[0]['SHOP_NAME_TH'] + "</font>")
+
+                        if (dataRes.length != 0) {
+                            $('#txtdesc').val(dataRes[0]['GOODS_DESC_TH'])
+                        } else {
+                            $('#txtdesc').val('')
+                        }
+                    }
+                });
+                //Modal 3
+                $('#strgoodcode').val(data1.GOODS_CODE);
+                $('#modal-title3').html('เพิ่ม Dimension สินค้า : ' + data1.GOODS_NAME_TH);
+
+                $.get(url_global + '/api/v1_0/master/updatedimension/' + data1.GOODS_CODE).done(function(jsonData) {
+                    console.log(jsonData)
+                    if (jsonData['STATUS'] == 1) {
+                        var dataRes = jsonData['RESULT']
+                        // $('#vendorname').html("<font color='blue'>" + dataRes[0]['SHOP_NAME_TH'] + "</font>")
+
+                        if (dataRes.length != 0) {
+                            if (dataRes[0]['GOODS_DIM_X'] == null) {
+                                $('#dimx').val(0)
+                            } else {
+                                $('#dimx').val(dataRes[0]['GOODS_DIM_X'])
+                            }
+
+                            if (dataRes[0]['GOODS_DIM_Y'] == null) {
+                                $('#dimy').val(0)
+                            } else {
+                                $('#dimy').val(dataRes[0]['GOODS_DIM_Y'])
+                            }
+
+                            if (dataRes[0]['GOODS_DIM_Z'] == null) {
+                                $('#dimz').val(0)
+                            } else {
+                                $('#dimz').val(dataRes[0]['GOODS_DIM_Z'])
+                            }
+                        } else {
+                            // $('#txtdesc').val('')
+                        }
+                    }
+                })
+            });
+
 
 
             $('#UpDim').click(function(event) {
@@ -441,7 +523,7 @@ $SHOP_NAME = $_REQUEST['SHOP_NAME'];
                         "GOODS_DIM_Y": dimy,
                         "GOODS_DIM_Z": dimz,
                         "ADMIN_NAME": admin_name,
-                        "SHOP_CODE": SHOP_CODE
+                        "SHOP_CODE": SOO
 
                     }).done(function(data) {
                         // console.log(data)

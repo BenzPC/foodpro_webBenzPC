@@ -49,7 +49,7 @@ $act = isset($_GET['act']) ? $_GET['act'] : 'index';
           <div class="col-12">
             <div class="card">
               <div class="card-header" style="margin-bottom: 10px;">
-                <h5 class="text-center">รายชื่อ Shop </h5>
+                <h5 class="text-center">รายชื่อ Shop </5>
               </div>
               <!-- Table -->
               <div class="row">
@@ -98,6 +98,8 @@ $act = isset($_GET['act']) ? $_GET['act'] : 'index';
       console.log(url_global)
 
       var tablePropertygroup1 = $('#data2').DataTable({
+
+
         "ajax": {
           "url": urll,
           "dataSrc": "RESULT",
@@ -193,7 +195,7 @@ $act = isset($_GET['act']) ? $_GET['act'] : 'index';
               var SO_CODE = row.SHOP_CODE;
               
 
-              return '<a   href="itemvendor.php?SO=' + SO_CODE + '"  class="btn btn-info btn-sm"><i class="fas fa-book"></i></a> ';
+              return '<a   href="itemvendor.php?SO=' + SO_CODE + '&SH_NAME='+ row.SHOP_NAME_TH +'"  class="btn btn-info btn-sm"><i class="fas fa-book"></i></a> ';
               // console.log(SO_CODE);
               // return '<a  href=?act=edit&id='+row.SHOP_PHONE+' onclick="myFuntion('+row.SHOP_NAME_TH+')" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a> ';
               // return '<button  class="btn btn-primary btn-sm ml-2 fas fa-info-circle" data-toggle="modal" data-target="#exampleModalLong" onclick="myFuntion('+row.SHOP_EMAIL+')"> รายละเอียด</button>';    //  SO_CODE                                   
