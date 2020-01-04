@@ -47,7 +47,7 @@ $SH_NAME = (isset($_GET['SH_NAME'])) ? $_GET['SH_NAME'] : '';
                                     <!-- Table -->
                                 </div>
                                 <div class="col-6" style="text-align: right; padding-right: 25px;">
-                                <a  class="btn btn-primary" type="button"href="additem.php?SO=<?php echo $SO_CODE; ?>&SH_NAME=<?php echo $SH_NAME; ?> ">เพิ่ม / + /  เพิ่มไอเทม</a>
+                                <a  class="btn btn-primary" type="button"href="additem.php?SO=<?php echo $SO_CODE; ?>&SH_NAME=<?php echo $SH_NAME; ?> ">เพิ่ม22 / + /  เพิ่มไอเทม</a>
                                 </div>
                             </div>
                             <div class="row">
