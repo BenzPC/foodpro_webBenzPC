@@ -40,80 +40,143 @@ $SH_NAME = (isset($_GET['SH_NAME'])) ? $_GET['SH_NAME'] : '';
                                 <h5 class="text-center">เพิ่ม สินค้า </h5>
                             </div>
                             <div class="row">
+                                <div class="col-6">
+                                    <h4 style="color: rgb(0, 0, 255); padding: 10px; padding-bottom: 0px;"><?php echo $SH_NAME; ?> </h4>
+                                    <!-- Table -->
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-12">
                                     <div class="table-responsive" style="padding: 20px;">
                                         <h1><span id="vendorname"></span></h1>
+
                                         <!-- <button id='refcombo1'> Refresh Combo Cate </button> -->
                                         <!-- <button id='refcombo2'> Refresh Combo Send </button> -->
                                         <!-- <button id='refcombo3'> Refresh Combo Dim </button> -->
                                         <!-- <button id='refcombo4'> Refresh Combo Unit </button><br><br> -->
-
-                                        <div class="position-relative form-group">
-                                            <label for="exampleEmail" class="">ชื่อสินค้า</label>
-                                            <input name="itemname" id="itemname" placeholder="" type="text" class="form-control">
-                                        </div>
-
-                                        <div class="position-relative form-group"><label for="exampleSelect" class="">Category</label>
-                                            <select name="category" id="category" class="form-control">
-                                            </select>
-                                        </div>
-
-                                        <div class="position-relative form-group"><label for="exampleSelect" class="">Sub Category</label>
-                                            <select name="subcategory" id="subcategory" class="form-control">
-                                            </select>
-                                        </div>
-
-                                        <div class="position-relative form-group"><label for="exampleSelect" class="">Type Category</label>
-                                            <select name="typecategory" id="typecategory" class="form-control">
-                                            </select>
-                                        </div>
-
-                                        <div class="position-relative form-group"><label for="exampleSelect" class="">ประเภทการขนส่ง</label>
-                                            <select name="send" id="send" class="form-control">
-                                            </select>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <label for="exampleEmail" class="">กว้าง (เซนติเมตร) <font color='red'>*(Dimension X)</font> </label>
-                                                <input name="dimx" id="dimx" placeholder="" type="number" class="form-control" min="0" value="1">
+                                        <form id='fileEditForm' name="fileEditForm" method="post" enctype="multipart/form-data">
+                                            <input name="CREATE_BY" id='CREATE_BY' value="<?php echo $_SESSION['name']; ?>">
+                                            <input name="DIM_CODE" id='dim' value="D01">
+                                            <input name="IS_PROMOTE" id='IS_PROMOTE' value="0">
+                                            <input name="IS_STOCK" id='IS_STOCK' value="1">
+                                            <input name="SHARE_LINK" id='SHARE_LINK' value="www.google.com">
+                                            <div class="position-relative form-group">
+                                                <label for="exampleEmail" class="">ชื่อสินค้า</label>
+                                                <input name="GOODS_NAME_TH" id="itemname" placeholder="" type="text" class="form-control">
                                             </div>
 
-                                            <div class="col-md-4">
-                                                <label for="exampleEmail" class="">ยาว (เซนติเมตร) <font color='red'>*(Dimension Y)</font> </label>
-                                                <input name="dimy" id="dimy" placeholder="" type="number" class="form-control" min="0" value="1">
+                                            <div class="position-relative form-group"><label for="exampleSelect" class="">Category</label>
+                                                <select name="CATE_CODE" id="category" class="form-control">
+                                                </select>
                                             </div>
 
-                                            <div class="col-md-4">
-                                                <label for="exampleEmail" class="">สูง (เซนติเมตร) <font color='red'>*(Dimension Z)</font> </label>
-                                                <input name="dimz" id="dimz" placeholder="" type="number" class="form-control" min="0" value="1">
+                                            <div class="position-relative form-group"><label for="exampleSelect" class="">Sub Category</label>
+                                                <select name="SUB_CATE_CODE" id="subcategory" class="form-control">
+                                                </select>
                                             </div>
-                                        </div>
 
-                                        <!-- <div class="position-relative form-group"><label for="exampleSelect" class="">ขนาดกล่อง</label>
+                                            <div class="position-relative form-group"><label for="exampleSelect" class="">Type Category</label>
+                                                <select name="TYPE_CATE_CODE" id="typecategory" class="form-control">
+                                                </select>
+                                            </div>
+
+                                            <div class="position-relative form-group"><label for="exampleSelect" class="">ประเภทการขนส่ง</label>
+                                                <select name="SEND_CODE" id="send" class="form-control">
+                                                </select>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label for="exampleEmail" class="">กว้าง (เซนติเมตร) <font color='red'>*(Dimension X)</font> </label>
+                                                    <input name="GOODS_DIM_X" id="dimx" placeholder="" type="number" class="form-control" min="0" value="1">
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <label for="exampleEmail" class="">ยาว (เซนติเมตร) <font color='red'>*(Dimension Y)</font> </label>
+                                                    <input name="GOODS_DIM_Y" id="dimy" placeholder="" type="number" class="form-control" min="0" value="1">
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <label for="exampleEmail" class="">สูง (เซนติเมตร) <font color='red'>*(Dimension Z)</font> </label>
+                                                    <input name="GOODS_DIM_Z" id="dimz" placeholder="" type="number" class="form-control" min="0" value="1">
+                                                </div>
+                                            </div>
+
+                                            <!-- <div class="position-relative form-group"><label for="exampleSelect" class="">ขนาดกล่อง</label>
                                             <select name="dim" id="dim" class="form-control">
                                             </select>
                                         </div> -->
 
-                                        <div class="position-relative form-group">
-                                            <label for="exampleEmail" class="">ราคา</label>
-                                            <input name="price" id="price" placeholder="" type="number" class="form-control" min="1" value="1">
-                                        </div>
+                                            <div class="position-relative form-group">
+                                                <label for="exampleEmail" class="">ราคา</label>
+                                                <input name="PRICE" id="price" placeholder="" type="number" class="form-control" min="1" value="1">
+                                            </div>
 
-                                        <div class="position-relative form-group"><label for="exampleSelect" class="">หน่วยการขาย</label>
-                                            &nbsp&nbsp
-                                            <!-- <input type="text" name="serch_unit" id="serch_unit" placeholder="ค้นหาหน่วยการขาย" style="width:290px" /> -->
-                                            <!-- <select name="unit" id="unit" class="form-control">
+                                            <div class="position-relative form-group"><label for="exampleSelect" class="">หน่วยการขาย</label>
+                                                &nbsp&nbsp
+                                                <!-- <input type="text" name="serch_unit" id="serch_unit" placeholder="ค้นหาหน่วยการขาย" style="width:290px" /> -->
+                                                <!-- <select name="unit" id="unit" class="form-control">
                                             </select> -->
-                                            <select class="form-control js-example-basic-single" name="unit" id="unit" style="width:100%">
-                                            </select>
-                                        </div>
+                                                <select class="form-control js-example-basic-single" name="UNIT_CODE" id="unit" style="width:100%">
+                                                </select>
+                                            </div>
 
-                                        <div class="position-relative form-group">
-                                            <label for="exampleEmail" class="">น้ำหนัก (กิโลกรัม)</label>
-                                            <input name="weight" id="weight" placeholder="" type="number" class="form-control" min="0" value="1">
-                                        </div>
+                                            <div class="position-relative form-group">
+                                                <label for="exampleEmail" class="">น้ำหนัก (กิโลกรัม)</label>
+                                                <input name="SUM_WEIGHT" id="weight" placeholder="" type="number" class="form-control" min="0" value="1">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="position-relative form-group text-center"><label for="exampleSelect" class="">รูปที่ : 1</label>
+                                                        <div>
+                                                            <img id="imgproduct1" src="" class="center" alt="">
+                                                        </div>
+                                                        <div class="custom-file ml-5">
+                                                            <br>
+                                                            <input type="file" id="editimgproduct1" name="IMG1" accept="image/x-png,image/jpeg">
+                                                            <button type="button" class="btn btn-danger" id="noeditimgproduct1" style="height:80% ;font-size: small;" hidden>X</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="position-relative form-group text-center"><label for="exampleSelect" class="">รูปที่ : 2</label>
+                                                        <div>
+                                                            <img id="imgproduct2" src="" alt="">
+                                                        </div>
+                                                        <div class="custom-file ml-5">
+                                                            <br>
+                                                            <input type="file" id="editimgproduct2" name="IMG2" accept="image/x-png,image/jpeg">
+                                                            <button type="button" class="btn btn-danger" id="noeditimgproduct2" style="height:80% ;font-size: small;" hidden>X</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="position-relative form-group text-center"><label for="exampleSelect" class="">รูปที่ : 3</label>
+                                                        <div>
+                                                            <img id="imgproduct3" src="" alt="">
+                                                        </div>
+                                                        <div class="custom-file ml-5">
+                                                            <br>
+                                                            <input type="file" id="editimgproduct3" name="IMG3" accept="image/x-png,image/jpeg">
+                                                            <button type="button" class="btn btn-danger" id="noeditimgproduct3" style="height:80% ;font-size: small;" hidden>X</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
+                                                <div class="col-md-6">
+                                                    <div class="position-relative form-group text-center"><label for="exampleSelect" class="">รูปที่ : 4</label>
+                                                        <div>
+                                                            <img id="imgproduct4" src="" alt="">
+                                                        </div>
+                                                        <div class="custom-file ml-5">
+                                                            <br>
+                                                            <input type="file" id="editimgproduct4" name="IMG4" accept="image/x-png,image/jpeg">
+                                                            <button type="button" class="btn btn-danger" id="noeditimgproduct4" style="height:80% ;font-size: small;" hidden>X</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
                                         <button id='btn0' class="btn btn-primary btn-lg mt-3 mb-3">บันทึก</button>
 
                                     </div>
@@ -149,6 +212,68 @@ $SH_NAME = (isset($_GET['SH_NAME'])) ? $_GET['SH_NAME'] : '';
             $(document).on("wheel", "input[type=number]", function(e) {
                 $(this).blur();
             });
+            $("#noeditimgproduct1").click(function() {
+                noimg(1)
+            });
+            $("#noeditimgproduct2").click(function() {
+                noimg(2)
+            });
+            $("#noeditimgproduct3").click(function() {
+                noimg(3)
+            });
+            $("#noeditimgproduct4").click(function() {
+                noimg(4)
+            });
+            $("#editimgproduct1").click(function() {
+                // alert($('#vendorname').text())
+                // $('#modal-title').html('รูปสินค้าที่: 1');
+                selectimg(1)
+            });
+            $("#editimgproduct2").click(function() {
+                // alert($('#vendorname').text())
+                // $('#modal-title').html('รูปสินค้าที่: 2');
+                selectimg(2)
+
+            });
+            $("#editimgproduct3").click(function() {
+                // alert($('#vendorname').text())
+                // $('#modal-title').html('รูปสินค้าที่: 3');
+                selectimg(3)
+            });
+
+            $("#editimgproduct4").click(function() {
+                // $('#modal-title').html('รูปสินค้าที่: 4');
+                selectimg(4)
+            });
+
+            function noimg(i) {
+                document.getElementById('imgproduct' + i).hidden = true;
+                document.getElementById('noeditimgproduct' + i).hidden = true;
+                document.getElementById('editimgproduct' + i).value = "";
+            }
+
+            function selectimg(a) {
+                $('#editimgproduct' + a).on('change', function() {
+                    var size = this.files[0].size / 1024 / 1024
+                    if (size.toFixed(2) > 2) {
+                        alert('to big, maximum is 2MB')
+                    } else {
+                        var fileName = $(this).val().split('\\').pop()
+                        $(this).siblings('.custom-file-label').html(fileName)
+                        if (this.files[0]) {
+                            var reader = new FileReader()
+                            reader.onload = function(e) {
+                                $("#imgproduct" + a).attr("src", e.target.result).width(300).height(300);
+                                $(this).siblings('.custom-file-label').html("")
+                                document.getElementById('noeditimgproduct' + a).hidden = false;
+                                document.getElementById('imgproduct' + a).hidden = false;
+
+                            }
+                            reader.readAsDataURL(this.files[0])
+                        }
+                    }
+                })
+            }
 
             load_category()
             load_send()
@@ -441,10 +566,13 @@ $SH_NAME = (isset($_GET['SH_NAME'])) ? $_GET['SH_NAME'] : '';
                 if (price.trim().length <= 0) {
                     $('#price').attr("style", "border-color:#dc3545");
                 }
-                if (weight.trim().length <= 0) {
+                if (weight.trim().length <= 0 || weight <= 0) {
                     $('#weight').attr("style", "border-color:#dc3545");
                 }
-
+                if (typecategory == null) {
+                    $('#typecategory').attr("style", "border-color:#dc3545");
+                }
+                
 
                 if (itemname.trim().length <= 0) {
                     $('#itemname').focus();
@@ -458,77 +586,86 @@ $SH_NAME = (isset($_GET['SH_NAME'])) ? $_GET['SH_NAME'] : '';
                     $('#price').focus();
                 } else if (weight.trim().length <= 0) {
                     $('#weight').focus();
+                } else if (typecategory == null) {
+                    $('#typecategory').focus();
                 }
 
 
+                if (itemname.trim().length > 0 && typecategory != null && price != 0 && weight != 0 && dimx.length > 0 && dimy.length > 0 && dimz.length > 0) {
+                    alert("ok")
+                    // $.post(url_global + "/api/v1_0/shop/shopitem", {
+                    //     "CREATE_BY": admin_name,
+                    //     "DIM_CODE": dim,
+                    //     "IS_PROMOTE": 0,
+                    //     "IS_STOCK": 1,
+                    //     "SHARE_LINK": "www.google.com",
+                    //     "GOODS_NAME_TH": itemname,
+                    //     "CATE_CODE": category,
+                    //     "SUB_CATE_CODE": subcategory,
+                    //     "TYPE_CATE_CODE": typecategory,
+                    //     "SEND_CODE": send,
+                    //     "GOODS_DIM_X": dimx,
+                    //     "GOODS_DIM_Y": dimy,
+                    //     "GOODS_DIM_Z": dimz,
+                    //     "PRICE": price,
+                    //     "UNIT_CODE": unit,
+                    //     "SUM_WEIGHT": weight,
+                    //     "SHOP_CODE": SHOP_CODE
 
-                // if (itemname.trim().length > 0 && typecategory != 0 && price != 0 && weight != 0 && dimx.length > 0 && dimy.length > 0 && dimz.length > 0) {
-                //     // alert("ok")
-                if (countstritemname.length <= 20) {
-                    $.post(url_global + "/api/v1_0/shop/shopitem", {
-                        "CATE_CODE": category,
-                        "SUB_CATE_CODE": subcategory,
-                        "UNIT_CODE": unit,
-                        "SEND_CODE": send,
-                        "GOODS_NAME_TH": itemname,
-                        "DIM_CODE": dim,
-                        "SHOP_CODE": SHOP_CODE,
-                        "PRICE": price,
-                        "IS_PROMOTE": 0,
-                        "IS_STOCK": 1,
-                        "SHARE_LINK": "www.google.com",
-                        "TYPE_CATE_CODE": typecategory,
-                        "SUM_WEIGHT": weight,
-                        "CREATE_BY": admin_name,
-                        "GOODS_DIM_X": dimx,
-                        "GOODS_DIM_Y": dimy,
-                        "GOODS_DIM_Z": dimz
+                    // }).done(function(data) {
+                    //     if (data['STATUS'] == 1) {
+                    //         var dataRes = data['RESULT']
+                    //         if (dataRes == 'SUCCESS') {
+                    //             alert("บันทึกสำเร็จ")
+                    //             window.location = './itemvendor.php?SO=' + shopcode + '&SH_NAME=' + SHOP_NAME
+                    //         } else {
+                    //             alert("ไม่สำเร็จ แจ้งแอดมิน")
+                    //         }
+                    //     } else {
+                    //         alert("ไม่สำเร็จ แจ้งแอดมิน")
+                    //     }
+                    //     // console.log(data)
+                    //     // alert(data)
+                    // });
+                    var url = url_global + '/api/v1_0/shop/shopitem/'
+                    var form1 = $('#fileEditForm')[0];
+                    var data = new FormData(form1);
 
-                    }).done(function(data) {
-                        if (data['STATUS'] == 1) {
-                            var dataRes = data['RESULT']
-                            if (dataRes == 'SUCCESS') {
-                                alert("บันทึกสำเร็จ")
-                                window.location = './itemvendor.php?SHOP_CODE=' + shopcode + '&SHOP_NAME=' + SHOP_NAME
-                            } else {
-                                alert("ไม่สำเร็จ แจ้งแอดมิน")
-                            }
-                        } else {
-                            alert("ไม่สำเร็จ แจ้งแอดมิน")
-                        }
-                        // console.log(data)
-                        // alert(data)
-                    });
+                    for (var value of data.values()) {
+                        console.log(value);
+                    }
+                    // $.ajax({
+                    //     type: "POST",
+                    //     enctype: 'multipart/form-data',
+                    //     url: url,
+                    //     data: data,
+                    //     processData: false,
+                    //     contentType: false,
+                    //     cache: false,
+                    //     timeout: 600000,
+                    //     success: function(data) {
+
+                    //         if (data['STATUS'] == 1) {
+                    //             var dataRes = data['RESULT']
+                    //             if (dataRes == 'SUCCESS') {
+                    //                 alert("บันทึกสำเร็จ")
+                    //                 location.reload();
+                    //             } else {
+                    //                 alert("ไม่สำเร็จ แจ้งแอดมิน")
+                    //             }
+                    //         } else {
+                    //             alert("ไม่สำเร็จ แจ้งแอดมิน")
+                    //         }
+                    //     },
+                    //     error: function(e) {
+                    //         console.log("ERROR : ", e);
+                    //     }
+                    // });
                     // alert('ไม่เกิน20')
-                } else {
-                    alert('ชื่อสินค้าเกิน 20 ตัวอักษร')
-                    $('#itemname').focus();
 
+                } else {
+                    alert("err")
                 }
-                // } else {
-                //     // alert("0000")
-                //     if (itemname.trim().length == 0) {
-                //         alert('ไม่มี ชื่อสินค้า');
-                //         $('#itemname').focus();
-                //     } else if (typecategory == 0) {
-                //         alert('แจ้งแอดมิน ให้เพิ่มข้อมูล');
-                //     } else if (price == 0) {
-                //         alert('ไม่มี ราคา');
-                //         $('#price').focus();
-                //     } else if (weight == 0) {
-                //         alert('ไม่มี น้ำหนัก');
-                //         $('#weight').focus();
-                //     } else if (dimx.length == 0) {
-                //         alert('ไม่มี แกน X');
-                //         $('#dimx').focus();
-                //     } else if (dimy.length == 0) {
-                //         alert('ไม่มี แกน Y');
-                //         $('#dimy').focus();
-                //     } else if (dimz.length == 0) {
-                //         alert('ไม่มี แกน Z');
-                //         $('#dimz').focus();
-                //     }
-                // }
             })
 
         })

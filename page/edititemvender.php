@@ -11,6 +11,7 @@ $url_global = $configs['url_global'];
 
 $SO_CODE = (isset($_GET['SHOP_CODE'])) ? $_GET['SHOP_CODE'] : '';
 $GOODS_CODE = (isset($_GET['GOODS_CODE'])) ? $_GET['GOODS_CODE'] : '';
+$SH_NAME = (isset($_GET['SH_NAME'])) ? $_GET['SH_NAME'] : '';
 
 
 ?>
@@ -57,11 +58,11 @@ $GOODS_CODE = (isset($_GET['GOODS_CODE'])) ? $_GET['GOODS_CODE'] : '';
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header" style="margin-bottom: 10px;">
-                                <h5 class="text-center">รายชื่อ สินค้า </h5>
+                                <h5 class="text-center">แก้ไข สินค้า </h5>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <h4 style="color: rgb(0, 0, 255); padding: 10px; padding-bottom: 0px;"><?php echo $SH_ANME; ?> </h4>
+                                    <h4 style="color: rgb(0, 0, 255); padding: 10px; padding-bottom: 0px;"><?php echo $SH_NAME; ?> </h4>
                                     <!-- Table -->
                                 </div>
                             </div>
@@ -75,7 +76,7 @@ $GOODS_CODE = (isset($_GET['GOODS_CODE'])) ? $_GET['GOODS_CODE'] : '';
                                                 <!-- <button id='refcombo1'> Refresh Combo Cate </button>
 
                                                 <button id='refcombo4'> Refresh Combo Unit </button> -->
-                                                <br>
+                                               
                                                 <!-- ////////////////////////////////////// -->
                                                 <div class="position-relative form-group">
                                                     <label for="exampleEmail" class="">ชื่อสินค้า</label>
@@ -302,7 +303,7 @@ $GOODS_CODE = (isset($_GET['GOODS_CODE'])) ? $_GET['GOODS_CODE'] : '';
                                 $("#imgproduct" + a).attr("src", e.target.result).width(300).height(300);
                                 $(this).siblings('.custom-file-label').html("")
                                 document.getElementById('noeditimgproduct' + a).hidden = false;
-                                document.getElementById('imgproduct' + i).hidden = false;
+                                document.getElementById('imgproduct' + a).hidden = false;
 
                             }
                             reader.readAsDataURL(this.files[0])
@@ -642,13 +643,6 @@ $GOODS_CODE = (isset($_GET['GOODS_CODE'])) ? $_GET['GOODS_CODE'] : '';
 
                 // Create an FormData object 
                 var data = new FormData(form1);
-
-
-
-
-
-
-
 
                 var shopcode = SHOP_CODE
                 // alert(shopcode)

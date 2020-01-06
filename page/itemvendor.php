@@ -47,7 +47,7 @@ $SH_NAME = (isset($_GET['SH_NAME'])) ? $_GET['SH_NAME'] : '';
                                     <!-- Table -->
                                 </div>
                                 <div class="col-6" style="text-align: right; padding-right: 25px;">
-                                <a  class="btn btn-primary" type="button"href="additem.php?SO=<?php echo $SO_CODE; ?>&SH_NAME=<?php echo $SH_NAME; ?> ">เพิ่ม22 / + /  เพิ่มไอเทม</a>
+                                <a  class="btn btn-primary" type="button"href="additem.php?SO=<?php echo $SO_CODE; ?>&SH_NAME=<?php echo $SH_NAME; ?> ">เพิ่ม / + /  เพิ่มไอเทม</a>
                                 </div>
                             </div>
                             <div class="row">
@@ -69,7 +69,7 @@ $SH_NAME = (isset($_GET['SH_NAME'])) ? $_GET['SH_NAME'] : '';
                                                     <th>ราคา</th>
                                                     <th>Is Stock</th>
                                                     <!-- <th>แก้ไขสินค้า</th> -->
-                                                    <th>เพิ่มรูปสินค้า</th>
+                                                    <!-- <th>เพิ่มรูปสินค้า</th> -->
                                                     <th>คำบรรยายสินค้า</th>
                                                     <th>เพิ่ม Dimension</th>
                                                 </tr>
@@ -150,10 +150,11 @@ $SH_NAME = (isset($_GET['SH_NAME'])) ? $_GET['SH_NAME'] : '';
                     <!-- <form id='fileUploadForm2' method="post" enctype="multipart/form-data"> -->
                     <!-- Select a file: <input type="file" name="IMG" accept="image/x-png,image/jpeg"><br> -->
                     <textarea rows="15" id='txtdesc' style="width: -webkit-fill-available;"></textarea>
-                    <input type="hidden" name="SHOP_CODE" id="strshopcode2">
-                    <input type="hidden" name="CATE_CODE" id="strcatecode2">
-                    <input type="hidden" name="SUB_CATE_CODE" id="strsubcode2">
-                    <input type="hidden" name="TYPE_CATE_CODE" id="strtypecode2">
+                    <input type="text" name="SHOP_CODE" id="strshopcode2">
+                    <input type="text" name="CATE_CODE" id="strcatecode2">
+                    <input type="text" name="SUB_CATE_CODE" id="strsubcode2">
+                    <input type="text" name="TYPE_CATE_CODE" id="strtypecode2">
+                    <input type="text" name="GOODS_CODE" id="strgoodcode2">
 
                     <!-- </form> -->
                 </div>
@@ -257,6 +258,7 @@ $SH_NAME = (isset($_GET['SH_NAME'])) ? $_GET['SH_NAME'] : '';
     <script>
         $(document).ready(function() {
             var admin_name = '<?php echo $_SESSION['name']; ?>'
+            var SH_NAME = '<?php echo $SH_NAME; ?>'
 
             const SOO = '<?= $SO_CODE ?>';
             const url_global = '<?php echo $url_global; ?>'
@@ -335,7 +337,7 @@ $SH_NAME = (isset($_GET['SH_NAME'])) ? $_GET['SH_NAME'] : '';
                     {
                         "data": "GOODS_CODE",
                         render: function(data, type, row) {
-                            return '<a style="color: #3f6ad8;" href="edititemvender.php?SHOP_CODE=' + SOO + '&GOODS_CODE=' + row.GOODS_CODE + ' ">' + row.GOODS_NAME_TH + '</a>';
+                            return '<a style="color: #3f6ad8;" href="edititemvender.php?SHOP_CODE=' + SOO + '&GOODS_CODE=' + row.GOODS_CODE + ' &SH_NAME=' + SH_NAME + '">' + row.GOODS_NAME_TH + '</a>';
                         }
                     },
                     {
@@ -365,19 +367,19 @@ $SH_NAME = (isset($_GET['SH_NAME'])) ? $_GET['SH_NAME'] : '';
                     {
                         "data": "IS_STOCK"
                     },
-                    {
-                        "data": "IMG",
-                        render: function(data, type, row) {
+                    // {
+                    //     "data": "IMG",
+                    //     render: function(data, type, row) {
 
-                            if (row.IMG < 4) {
-                                return "<button class='btnAddImg btn btn-secondary' id='btnidAddImg' data-toggle='modal' data-target='#myModal'> เพิ่มรูปสินค้า (" + row.IMG + ") </button>";
+                    //         if (row.IMG < 4) {
+                    //             return "<button class='btnAddImg btn btn-secondary' id='btnidAddImg' data-toggle='modal' data-target='#myModal'> เพิ่มรูปสินค้า (" + row.IMG + ") </button>";
 
-                            } else {
-                                return "<button class='btnAddImg btn btn-secondary' id='btnidAddImg' disabled> เพิ่มรูปสินค้า (" + row.IMG + ") </button>";
+                    //         } else {
+                    //             return "<button class='btnAddImg btn btn-secondary' id='btnidAddImg' disabled> เพิ่มรูปสินค้า (" + row.IMG + ") </button>";
 
-                            }
-                        }
-                    },
+                    //         }
+                    //     }
+                    // },
                     {
                         "data": "DESC",
                         render: function(data, type, row) {
@@ -456,7 +458,8 @@ $SH_NAME = (isset($_GET['SH_NAME'])) ? $_GET['SH_NAME'] : '';
                 $('#strcatecode2').val(data1.CATE_CODE);
                 $('#strsubcode2').val(data1.SUB_CATE_CODE);
                 $('#strtypecode2').val(data1.TYPE_CATE_CODE);
-
+                $('#strgoodcode2').val(data1.GOODS_CODE);
+                
                 $('#txtdesc').val('')
                 $('#modal-title2').html('ชื่อสินค้า: ' + data1.GOODS_NAME_TH);
 
@@ -560,6 +563,7 @@ $SH_NAME = (isset($_GET['SH_NAME'])) ? $_GET['SH_NAME'] : '';
                 var strsubcode2 = $('#strsubcode2').val();
                 var strtypecode2 = $('#strtypecode2').val();
                 var txtdesc = $('#txtdesc').val().trim();
+                var strgoodcode2 = $('#strgoodcode2').val();
 
                 if (txtdesc.length <= 500) {
                     $.post(url_global + "/api/v1_0/shop/getitemdesc", {
@@ -568,7 +572,8 @@ $SH_NAME = (isset($_GET['SH_NAME'])) ? $_GET['SH_NAME'] : '';
                         "SHOP_CODE": strshopcode2,
                         "TYPE_CATE_CODE": strtypecode2,
                         "GOODS_DESC_TH": txtdesc,
-                        "ADMIN_NAME": admin_name
+                        "ADMIN_NAME": admin_name,
+                        "GOODS_CODE": strgoodcode2
 
                     }).done(function(data) {
                         if (data['STATUS'] == 1) {

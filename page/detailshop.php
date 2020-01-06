@@ -19,6 +19,7 @@ use PHPMailer\PHPMailer\Exception;
 if (empty($_SESSION['name'])) {
   header('Location: ../');
 }
+$nameadmin = $_SESSION['name'];
 
 // $user_level = getUserLevel($_SESSION['user_code']);
 // if(!isset($_SESSION['user_code']) || ($user_level == 1 || empty($user_level))){
@@ -140,6 +141,8 @@ if (empty($_SESSION['name'])) {
                         <!-- <h5 class="card-title"> Edit Register Vendor </h5> -->
                         <!-- <button id='refcombo'> Refresh Combo </button><br>--><br>
                         <form id='fileEditForm' name="fileEditForm" method="post" enctype="multipart/form-data">
+                          <input type="text" name="nameadmin" id="nameadmin" value="<?php echo $nameadmin;  ?>" hidden>
+                          <input type="text" name="shopcode" id="shopcode" hidden>
                           <div class="row">
                             <div class="col-md-6">
                               <div class="position-relative form-group">
@@ -151,6 +154,7 @@ if (empty($_SESSION['name'])) {
                               <div class="position-relative form-group"><label for="exampleSelect" class="">ตลาด</label>
                                 <select name="market" id="market" class="form-control">
                                 </select>
+                                <input type="text" name="namemarket" id="namemarket"  hidden>
                               </div>
                             </div>
                           </div>
@@ -190,8 +194,8 @@ if (empty($_SESSION['name'])) {
                             <div class="col-md-6">
                               <div class="position-relative form-group">
                                 <label for="" class="">ชื่อ</label>
-                                <input name="firstname" id="firstname" placeholder="" type="text" class="form-control">
                                 <input name="shopcreateby" id="shopcreateby" placeholder="" type="hidden" class="form-control">
+                                <input name="firstname" id="firstname" placeholder="" type="text" class="form-control">
                               </div>
                             </div>
 
@@ -239,7 +243,7 @@ if (empty($_SESSION['name'])) {
                               </div>
                             </div>
                             <div class="col-md-4">
-                              <div class="position-relative form-group"><label for="exampleSelect" class="">เจ้าของ แพ็กเอง</label>
+                              <div class="position-relative form-group"><label for="exampleSelect" class=""> เจ้าของ แพ็กเอง</label>
                                 <select name="owner_pack" id="owner_pack" class="form-control">
                                   <option value="0">ไม่แพ็กเอง</option>
                                   <option value="1">แพ็กเอง</option>
@@ -267,6 +271,7 @@ if (empty($_SESSION['name'])) {
                               <div class="position-relative form-group"><label for="exampleSelect" class="">ศูนย์บริการ</label>
                                 <select name="servicecenter" id="servicecenter" class="form-control">
                                 </select>
+                                <input name="nameservicecenter" id="nameservicecenter" class="form-control" hidden>
                               </div>
                             </div>
                             <div class="col-md-4">
@@ -292,7 +297,8 @@ if (empty($_SESSION['name'])) {
                                 </select>
                                 <br>
                                 <label class="switch">
-                                  <input type="checkbox" id="InSwitchStore" name="InSwitchStore" value="2" checked>
+                                  <input type="checkbox" name="InSwitchStore" id="InSwitchStore" checked>
+                                  <input type="text" name="InSwitchStore1" id="InSwitchStore1">
                                   <span class="slider round switch_sides " id="SwitchStore">
                                     <span class="span12" id="span12">
                                     </span>
@@ -305,11 +311,12 @@ if (empty($_SESSION['name'])) {
                               <div class="position-relative form-group text-center"><label for="exampleSelect" class="">รูปที่ 1 : Profile</label>
                                 <div>
                                   <img id="imgproduct1" src="" class="center" alt="" style="width:300px;">
-                                  <img id="imgproduct1S" src="https://png.pngtree.com/png-clipart/20190603/original/pngtree-oranges-pattern-png-image_3254.jpg" class="center" alt="" style="width:300px" hidden>
+                                  <img id="imgproduct1S" src="" class="center" alt="" style="width:300px" hidden>
                                 </div>
                                 <div class="custom-file ml-5">
                                   <br>
-                                  <input type="file" id="editimgproduct1" name="IMG1" accept="image/x-png,image/jpeg">
+                                  <input type="file" name="IMG1" id="editimgproduct1" accept="image/x-png,image/jpeg">
+                                  <input type="text" name="oldIMG1" id="oldeditimgproduct1" accept="image/x-png,image/jpeg" hidden>
                                   <button type="button" class="btn btn-danger" id="noeditimgproduct1" style="height:80% ;font-size: small;" hidden>X</button>
                                 </div>
                               </div>
@@ -319,11 +326,13 @@ if (empty($_SESSION['name'])) {
                               <div class="position-relative form-group text-center"><label for="exampleSelect" class="">รูปที่ 2 : Banner</label>
                                 <div>
                                   <img id="imgproduct2" src="" class="center" alt="" style="width:300px;height: 250px">
-                                  <img id="imgproduct2S" src="https://png.pngtree.com/png-clipart/20190610/original/pngtree-orange-pattern-background-png-image_1910701.jpg" alt="" style="width:300px" hidden>
+                                  <img id="imgproduct2S" src="" alt="" style="width:300px" hidden>
                                 </div>
                                 <div class="custom-file ml-5">
                                   <br>
                                   <input type="file" id="editimgproduct2" name="IMG2" accept="image/x-png,image/jpeg">
+                                  <input type="text" name="oldIMG2" id="oldeditimgproduct2" accept="image/x-png,image/jpeg" hidden>
+
                                   <button type="button" class="btn btn-danger" id="noeditimgproduct2" style="height:80% ;font-size: small;" hidden>X</button>
                                 </div>
                               </div>
@@ -351,8 +360,7 @@ if (empty($_SESSION['name'])) {
       var admin_name = '<?php echo $_SESSION['name']; ?>'
       const url_global = '<?= $url_global ?>';
       const SOO = '<?= $SO_CODE ?>';
-      var imgProfile = "";
-      var imgBanner = "";
+
       var SaveConfirmShop = "";
       $("#ISsub_dashboard").attr('style', "color : brown");
 
@@ -420,7 +428,7 @@ if (empty($_SESSION['name'])) {
 
       if (SOO !== "") {
         $.get(url_global + `/api/v1_0/shop/detail/${SOO}`).done(function(data) {
-          console.log(data)
+          // console.log(data)
           const shop = data.RESULT
           $('#shopname').val(shop.SHOP_NAME_TH)
           $('#market').val(shop.MARKET_CODE)
@@ -441,25 +449,27 @@ if (empty($_SESSION['name'])) {
           $('#servicecenter').val()
           $('#accountnumber').val(shop.ACC_NO)
           $('#accountname').val(shop.ACC_NAME)
-          $('#InSwitchStore').val(shop.SHOP_STATUS)
-          document.getElementById('imgproduct1').src = "https://apidev.foodproonline.com/api/img/shop/" + shop.SHOP_IMG_PATH_PROFILE;
-          document.getElementById('imgproduct2').src = "https://apidev.foodproonline.com/api/img/banner/" + shop.SHOP_IMG_PATH_BANNER;
-
+          $('#InSwitchStore1').val(shop.SHOP_STATUS)
+          $('#imgproduct1').attr('src', "http://127.0.0.1:4200/api/v1_0/img/BOX/"+ shop.SHOP_IMG_PATH_PROFILE).width(300).height(300);
+          $('#imgproduct2').attr('src', "http://127.0.0.1:4200/api/v1_0/img/BANNER_HOME/"+ shop.SHOP_IMG_PATH_BANNER).width(300).height(300);
+          
+          // document.getElementById('imgproduct1').src = "https://apidev.foodproonline.com/api/img/shop/" + shop.SHOP_IMG_PATH_PROFILE;
+          // document.getElementById('imgproduct2').src = "https://apidev.foodproonline.com/api/img/banner/" + shop.SHOP_IMG_PATH_BANNER;
+          $('#oldeditimgproduct1').val("https://apidev.foodproonline.com/api/img/shop/" + shop.SHOP_IMG_PATH_PROFILE);
+          $('#oldeditimgproduct2').val("https://apidev.foodproonline.com/api/img/banner/" + shop.SHOP_IMG_PATH_BANNER);
+          $('#shopcode').val(shop.SHOP_CODE)
           SwitchStorefun();
           load_province(shop.PROVINCE_CODE, shop.DISTRICT_CODE)
 
-
+          load_market(shop.MARKET_CODE)
           if (shop.DC_LOCATION_ID) {
             location_dc(shop.DC_LOCATION_ID)
           } else {
             load_region();
-
           }
           load_bank(shop.BANK_CODE);
           // load_region();
           // ใส่ชื่อรูป
-          imgProfile = shop.SHOP_IMG_PATH_PROFILE;
-          imgBanner = shop.SHOP_IMG_PATH_BANNER;
 
           document.getElementById('btn0').hidden = true;
           document.getElementById('btn2').hidden = false;
@@ -470,11 +480,13 @@ if (empty($_SESSION['name'])) {
 
         $('#imgproduct1').attr('hidden', "true");
         $('#imgproduct2').attr('hidden', "true");
+        $('#InSwitchStore1').val(2);
         load_province();
         // location_dc();
         SwitchStorefun();
         load_region();
         load_bank();
+        load_market();
 
 
       }
@@ -483,17 +495,16 @@ if (empty($_SESSION['name'])) {
       });
 
       function SwitchStorefun() {
-        var InSwitchStore = document.getElementById("InSwitchStore").value
+        var InSwitchStore1 = document.getElementById("InSwitchStore1").value
 
-        if (InSwitchStore == 2) {
+        if (InSwitchStore1 == 2) {
           var element = document.getElementById("SwitchStore");
           element.classList.add("switch_sides");
-
           var element = document.getElementById("span12");
           element.classList.add("switch_on");
           element.classList.remove("switch_off");
-          $('#InSwitchStore').val(0)
-
+          // $('#InSwitchStore1').val(0);
+          document.getElementById("InSwitchStore1").value = 0;
         } else {
           var element = document.getElementById("SwitchStore");
           element.classList.remove("switch_sides");
@@ -501,7 +512,8 @@ if (empty($_SESSION['name'])) {
           var element = document.getElementById("span12");
           element.classList.add("switch_off");
           element.classList.remove("switch_on");
-          $('#InSwitchStore').val(2)
+          // $('#InSwitchStore1').val(2);
+          document.getElementById("InSwitchStore1").value = 2;
         }
       }
 
@@ -719,6 +731,7 @@ if (empty($_SESSION['name'])) {
               $('#region').append(appendRegion)
               $('#servicecenter').append(appendSiteC)
 
+
               if (region) {
 
                 $('#region').val(region)
@@ -837,9 +850,9 @@ if (empty($_SESSION['name'])) {
       }
 
 
-      load_market()
 
-      function load_market() {
+
+      function load_market(market) {
         $('#market').empty()
         $.get(url_global + '/api/v1_0/master/getcombomarket').done(function(data) {
           var append = ""
@@ -853,7 +866,11 @@ if (empty($_SESSION['name'])) {
                 append = append + "<option value='" + MARKET_CODE + "'>" + MARKET_NAME_TH + "</option>";
               }
 
-              $('#market').append(append)
+              $('#market').append(append);
+              if (market) {
+                $('#market').val(market)
+              }
+
               //alert(append)
 
             } else {
@@ -916,8 +933,7 @@ if (empty($_SESSION['name'])) {
 
         // var url = url_global + '/api/v1_0/product'
         // event.preventDefault();
-        var form1 = $('#fileEditForm')[0];
-        var data = new FormData(form1);
+
 
         var shopname = $('#shopname').val().trim();
         var market = $('#market').val();
@@ -943,12 +959,11 @@ if (empty($_SESSION['name'])) {
         var InSwitchStore = $('#InSwitchStore').val();
         var editimgproduct1 = $('#editimgproduct1').val();
         var editimgproduct2 = $('#editimgproduct2').val();
-        if (editimgproduct1 == "") {} else {
-          imgProfile = editimgproduct1;
-        }
-        if (editimgproduct2 == "") {} else {
-          imgBanner = editimgproduct2;
-        }
+
+        $('#nameservicecenter').val($('#servicecenter option:selected').text())
+        $('#namemarket').val($('#market option:selected').text())
+
+
 
         if (shopname.trim().length <= 0) {
           $('#shopname').attr("style", "border-color:#dc3545");
@@ -998,8 +1013,12 @@ if (empty($_SESSION['name'])) {
 
         // focus
         if (shopname.trim().length <= 0) {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
           document.getElementById("shopname").focus();
         } else if (address.trim().length <= 0) {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
           document.getElementById("address").focus();
         } else if (firstname.trim().length <= 0) {
           document.getElementById("firstname").focus();
@@ -1033,38 +1052,41 @@ if (empty($_SESSION['name'])) {
           accountname.trim().length > 0) {
           //   // alert('okkkk');
           //   var countstritemname = escapeRegExp(shopname)
-          if (shopname.length <= 20) {
-            if (emailerr == "err") {
-              alert('อีเมล์ไม่ถูกต้อง');
+          // if (shopname.length <= 20) {
+          if (emailerr == "err") {
+            alert('อีเมล์ไม่ถูกต้อง');
+          } else {
+            if (tel.length < 9) {
+              alert('เบอร์โทรควรไม่ต่ำกว่า 9 ตัว');
             } else {
-              if (tel.length < 9) {
-                alert('เบอร์โทรควรไม่ต่ำกว่า 9 ตัว');
-              } else {
-                if (SaveConfirmShop == "Save") {
-                  if (imgProfile.length > 0 && imgBanner.length > 0) {
-                   
-                    SaveShop();
-                  } else {
-                    alert('ใส่รูป');
-                  }
+              if (SaveConfirmShop == "Save") {
+                if (editimgproduct1.length > 0 && editimgproduct2.length > 0) {
+
+                  SaveShop();
                 } else {
-                  ConfirmShop();
-                 
+                  alert('ใส่รูป');
                 }
+              } else {
+                ConfirmShop();
+
               }
             }
-          } else {
-            alert('ชื่อร้านไม่ควรเกิน 20 ตัวอักษร');
           }
+          // } else {
+          //   alert('ชื่อร้านไม่ควรเกิน 20 ตัวอักษร');
+          // }
         };
       };
 
       function SaveShop() {
+        $('#active_lalamove').prop('disabled', false);
+        $('#owner_pack').prop('disabled', false);
         var url = url_global + '/api/v1_0/shop/admingenshop/'
         var form1 = $('#fileEditForm')[0];
         var data = new FormData(form1);
 
-        alert("บันทึก");
+        // alert("บันทึก");
+
         $.ajax({
           type: "POST",
           enctype: 'multipart/form-data',
@@ -1077,7 +1099,11 @@ if (empty($_SESSION['name'])) {
           success: function(data) {
             if (data['STATUS'] == 1) {
               if (data['RESULT'] == 'SUCCESS') {
-                alert("แก้ไขข้อมูลเสร็จสิ้น");
+                alert("เพิ่มข้อมูลเสร็จสิ้น");
+                $('#active_lalamove').prop('disabled', true);
+                $('#owner_pack').prop('disabled', true);
+                $('#nameservicecenter').val("");
+                $('#namemarket').val("");
                 location.reload();
               } else {
                 alert("ผิดพลาด");
@@ -1093,34 +1119,46 @@ if (empty($_SESSION['name'])) {
       };
 
       function ConfirmShop() {
+        $('#active_lalamove').prop('disabled', false);
+        $('#owner_pack').prop('disabled', false);
+        var url = url_global + '/api/v1_0/shop/admingenshop/'
+        var form1 = $('#fileEditForm')[0];
+        var data = new FormData(form1);
 
-        var url = url_global + '/api/v1_0/shop/'
         alert("ยืนยัน");
-        // $.ajax({
-        //   type: "POST",
-        //   enctype: 'multipart/form-data',
-        //   url: url,
-        //   data: data,
-        //   processData: false,
-        //   contentType: false,
-        //   cache: false,
-        //   timeout: 600000,
-        //   success: function(data) {
-        //     if (data['STATUS'] == 1) {
-        //       if (data['RESULT'] == 'SUCCESS') {
-        //         alert("แก้ไขข้อมูลเสร็จสิ้น");
-        //         location.reload();
-        //       } else {
-        //         alert("ผิดพลาด");
-        //       }
-        //     } else {
-        //       alert("ผิดพลาด");
-        //     }
-        //   },
-        //   error: function(e) {
-        //     console.log("ERROR : ", e);
-        //   }
-        // });
+        // for (var value of data.values()) {
+        //   console.log(value);
+        // }
+       
+        $.ajax({
+          type: "POST",
+          enctype: 'multipart/form-data',
+          url: url,
+          data: data,
+          processData: false,
+          contentType: false,
+          cache: false,
+          timeout: 600000,
+          success: function(data) {
+            if (data['STATUS'] == 1) {
+              if (data['RESULT'] == 'SUCCESS') {
+                alert("แก้ไขข้อมูลเสร็จสิ้น");
+                $('#active_lalamove').prop('disabled', true);
+                $('#owner_pack').prop('disabled', true);
+                $('#nameservicecenter').val("");
+                $('#namemarket').val("");
+                location.reload();
+              } else {
+                alert("ผิดพลาด");
+              }
+            } else {
+              alert("ผิดพลาด");
+            }
+          },
+          error: function(e) {
+            console.log("ERROR : ", e);
+          }
+        });
       };
       //----- เปลี่ยนแปลงให้ลบกรอบแดง
       $('#shopname').change(function() {
